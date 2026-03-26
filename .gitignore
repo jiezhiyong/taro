@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.vscode/
+.idea/
+coverage/
+.temp/
+.rn_temp/
+.output/
