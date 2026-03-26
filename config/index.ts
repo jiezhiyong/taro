@@ -20,6 +20,8 @@ export default defineConfig({
   h5: {
     publicPath: "/",
     staticDirectory: "static",
+    ssr: false,
+    esnextModules: ["nutui-react-taro", "icons-react-taro"],
     postcss: {
       autoprefixer: { enable: true },
       cssModules: { enable: false }

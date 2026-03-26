@@ -1,6 +1,7 @@
-/* @tailwind base;
+@import "@nutui/nutui-react-taro/dist/style.css";
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
 
 page {
   background-color: #f5f5f5;
