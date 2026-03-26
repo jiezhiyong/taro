@@ -1,13 +1,25 @@
-import { defineAppConfig } from '@tarojs/taro'
-
-export default defineAppConfig({
+export default {
   pages: [
-    "pages/index/index",
-    "pages/components/index",
-    "pages/form/index",
-    "pages/navigation/index",
-    "pages/feedback/index"
+    'pages/index/index',
+    'pages/components/index',
+    'pages/form/index',
+    'pages/navigation/index',
+    'pages/feedback/index'
   ],
-  // 移除可能导致 H5 构建冲突的 window 配置
-  // window 配置已移至平台特定配置
-});
+  window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#fff',
+    navigationBarTitleText: 'Taro Showcase',
+    navigationBarTextStyle: 'black'
+  },
+  tabBar: {
+    color: '#666',
+    selectedColor: '#FA2C19',
+    backgroundColor: '#fff',
+    list: [
+      { pagePath: 'pages/index/index', text: '首页' },
+      { pagePath: 'pages/components/index', text: '组件' },
+      { pagePath: 'pages/form/index', text: '表单' }
+    ]
+  }
+}

@@ -1,5 +1,4 @@
-import { definePageConfig } from '@tarojs/taro'
 
-export default definePageConfig({
+export default {
   navigationBarTitleText: "Taro Showcase"
-});
+};

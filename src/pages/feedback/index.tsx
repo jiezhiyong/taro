@@ -8,7 +8,7 @@ export default function Feedback() {
   const [loadingVisible, setLoadingVisible] = useState(false);
   const [skeletonLoading, setSkeletonLoading] = useState(true);
 
-  const showToast = (type: string) => {
+  const showToast = (type) => {
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2000);
   };
