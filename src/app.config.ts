@@ -8,10 +8,6 @@ export default defineAppConfig({
     "pages/navigation/index",
     "pages/feedback/index"
   ],
-  window: {
-    backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "Taro Showcase",
-    navigationBarTextStyle: "black"
-  }
+  // 移除可能导致 H5 构建冲突的 window 配置
+  // window 配置已移至平台特定配置
 });
