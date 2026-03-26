@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: ["@tarojs/plugin-html"],
   framework: "react",
   compiler: "webpack5",
-  cache: { enable: false },
+  cache: { enable: true },
   mini: {
     postcss: {
       pxtransform: { enable: true, config: {} },
@@ -21,7 +21,6 @@ export default defineConfig({
     publicPath: "/",
     staticDirectory: "static",
     ssr: false,
-    esnextModules: ["nutui-react-taro", "icons-react-taro"],
     postcss: {
       autoprefixer: { enable: true },
       cssModules: { enable: false }

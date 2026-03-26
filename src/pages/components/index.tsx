@@ -1,123 +1,38 @@
-import { View } from "@tarojs/components";
-import {
-  Button,
-  Badge,
-  Tag,
-  Avatar,
-  Swiper,
-  SwiperItem,
-  Cell,
-  Space
-} from "@nutui/nutui-react-taro";
+import { View, Text } from "@tarojs/components";
 import "./index.scss";
 
 export default function Components() {
-  const swiperList = [
-    'https://via.placeholder.com/300x150/ff6b6b/ffffff?text=Slide+1',
-    'https://via.placeholder.com/300x150/4ecdc4/ffffff?text=Slide+2',
-    'https://via.placeholder.com/300x150/45b7d1/ffffff?text=Slide+3',
-  ];
-
   return (
     <View className="container p-4">
-      {/* 按钮组件 */}
-      <Cell.Group title="Button 按钮">
-        <Cell>
-          <Space wrap>
-            <Button type="primary">主要按钮</Button>
-            <Button type="info">信息按钮</Button>
-            <Button type="success">成功按钮</Button>
-            <Button type="warning">警告按钮</Button>
-            <Button type="danger">危险按钮</Button>
-          </Space>
-        </Cell>
-        <Cell>
-          <Space wrap>
-            <Button type="primary" size="small">小尺寸</Button>
-            <Button type="primary" size="normal">正常尺寸</Button>
-            <Button type="primary" size="large">大尺寸</Button>
-          </Space>
-        </Cell>
-      </Cell.Group>
+      <Text className="text-xl font-bold mb-4">基础组件展示</Text>
 
-      {/* 标记组件 */}
-      <Cell.Group title="Badge 标记">
-        <Cell>
-          <Space>
-            <Badge value={8}>
-              <Avatar shape="square" />
-            </Badge>
-            <Badge value={76}>
-              <Avatar shape="square" />
-            </Badge>
-            <Badge value="Hot">
-              <Avatar shape="square" />
-            </Badge>
-            <Badge dot>
-              <Avatar shape="square" />
-            </Badge>
-          </Space>
-        </Cell>
-      </Cell.Group>
+      <View className="bg-white rounded-lg p-4 mb-4">
+        <Text className="text-lg font-semibold mb-2">按钮组件</Text>
+        <View className="space-y-2">
+          <View className="bg-blue-500 text-white p-2 rounded text-center">主要按钮</View>
+          <View className="bg-green-500 text-white p-2 rounded text-center">成功按钮</View>
+          <View className="bg-yellow-500 text-white p-2 rounded text-center">警告按钮</View>
+          <View className="bg-red-500 text-white p-2 rounded text-center">危险按钮</View>
+        </View>
+      </View>
 
-      {/* 标签组件 */}
-      <Cell.Group title="Tag 标签">
-        <Cell>
-          <Space wrap>
-            <Tag type="primary">主要标签</Tag>
-            <Tag type="success">成功标签</Tag>
-            <Tag type="warning">警告标签</Tag>
-            <Tag type="danger">危险标签</Tag>
-            <Tag type="info">信息标签</Tag>
-          </Space>
-        </Cell>
-        <Cell>
-          <Space wrap>
-            <Tag type="primary" round>圆角标签</Tag>
-            <Tag type="success" mark>标记标签</Tag>
-            <Tag type="info" closable>可关闭</Tag>
-          </Space>
-        </Cell>
-      </Cell.Group>
+      <View className="bg-white rounded-lg p-4 mb-4">
+        <Text className="text-lg font-semibold mb-2">标签组件</Text>
+        <View className="flex flex-wrap gap-2">
+          <View className="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm">主要标签</View>
+          <View className="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">成功标签</View>
+          <View className="bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-sm">警告标签</View>
+          <View className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">危险标签</View>
+        </View>
+      </View>
 
-      {/* 头像组件 */}
-      <Cell.Group title="Avatar 头像">
-        <Cell>
-          <Space>
-            <Avatar size={40} />
-            <Avatar size={50} />
-            <Avatar size={60} />
-          </Space>
-        </Cell>
-        <Cell>
-          <Space>
-            <Avatar shape="square" />
-            <Avatar shape="round" />
-          </Space>
-        </Cell>
-      </Cell.Group>
-
-      {/* 轮播组件 */}
-      <Cell.Group title="Swiper 轮播">
-        <Cell>
-          <Swiper
-            autoPlay
-            height={150}
-            indicator
-            style={{ borderRadius: '8px', overflow: 'hidden' }}
-          >
-            {swiperList.map((item, index) => (
-              <SwiperItem key={index}>
-                <img
-                  src={item}
-                  alt={`轮播图${index + 1}`}
-                  style={{ width: '100%', height: '150px', objectFit: 'cover' }}
-                />
-              </SwiperItem>
-            ))}
-          </Swiper>
-        </Cell>
-      </Cell.Group>
+      <View className="bg-white rounded-lg p-4">
+        <Text className="text-lg font-semibold mb-2">卡片组件</Text>
+        <View className="border border-gray-200 rounded p-3">
+          <Text className="font-medium">卡片标题</Text>
+          <Text className="text-sm text-gray-600 mt-1">这是一个简单的卡片组件示例</Text>
+        </View>
+      </View>
     </View>
   );
 }
