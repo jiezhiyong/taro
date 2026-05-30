@@ -15,12 +15,27 @@ export default {
   },
   tabBar: {
     color: '#666',
-    selectedColor: '#FA2C19',
+    selectedColor: '#c96442',
     backgroundColor: '#fff',
     list: [
-      { pagePath: 'pages/index/index', text: '首页' },
-      { pagePath: 'pages/components/index', text: '组件' },
-      { pagePath: 'pages/form/index', text: '表单' },
+      {
+        pagePath: 'pages/index/index',
+        text: '首页',
+        iconPath: 'assets/home.png',
+        selectedIconPath: 'assets/home-active.png',
+      },
+      {
+        pagePath: 'pages/components/index',
+        text: '组件',
+        iconPath: 'assets/components.png',
+        selectedIconPath: 'assets/components-active.png',
+      },
+      {
+        pagePath: 'pages/form/index',
+        text: '表单',
+        iconPath: 'assets/form.png',
+        selectedIconPath: 'assets/form-active.png',
+      },
     ],
   },
 };
