@@ -1,14 +1,11 @@
 import {
   Button,
   Checkbox,
-  CheckboxGroup,
   Input,
   Radio,
-  RadioGroup,
   Switch,
-  Text,
-  View,
-} from '@tarojs/components';
+} from '@nutui/nutui-react-taro';
+import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
 
@@ -18,10 +15,6 @@ export default function FormPage() {
   const [checkboxValue, setCheckboxValue] = useState(['1']);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleCheckboxChange = (e: { detail: { value: string[] } }) => {
-    setCheckboxValue(e.detail.value);
-  };
 
   const onSubmit = () => {
     if (!username) {
@@ -64,17 +57,16 @@ export default function FormPage() {
           基础输入 fields
         </Text>
 
-        <View className="space-y-4">
+        <View className="flex flex-col gap-4">
           <View>
             <Text className="mb-2 block font-semibold text-slate-500 text-xs">
               用户名 *
             </Text>
             <Input
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm transition-all focus:border-indigo-500 focus:bg-white"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:border-indigo-500 focus:bg-white"
               placeholder="请输入用户名"
-              placeholderStyle="color: #cbd5e1"
               value={username}
-              onInput={(e) => setUsername(e.detail.value)}
+              onChange={(val) => setUsername(val)}
             />
           </View>
 
@@ -83,12 +75,11 @@ export default function FormPage() {
               密码 *
             </Text>
             <Input
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm transition-all focus:border-indigo-500 focus:bg-white"
-              type="safe-password"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:border-indigo-500 focus:bg-white"
+              type="password"
               placeholder="请输入密码"
-              placeholderStyle="color: #cbd5e1"
               value={password}
-              onInput={(e) => setPassword(e.detail.value)}
+              onChange={(val) => setPassword(val)}
             />
           </View>
         </View>
@@ -100,45 +91,35 @@ export default function FormPage() {
           选项与开关 Selectors
         </Text>
 
-        <View className="space-y-6">
+        <View className="flex flex-col gap-6">
           <View>
             <Text className="mb-3 block font-semibold text-slate-500 text-xs">
               单项选择 (Radio)
             </Text>
-            <RadioGroup onChange={(e) => setRadioValue(e.detail.value)}>
+            <Radio.Group
+              value={radioValue}
+              onChange={(val) => setRadioValue(String(val))}
+            >
               <View className="flex gap-6">
-                <Radio value="1" checked={radioValue === '1'} color="#6366f1">
-                  选项一
-                </Radio>
-                <Radio value="2" checked={radioValue === '2'} color="#6366f1">
-                  选项二
-                </Radio>
+                <Radio value="1">选项一</Radio>
+                <Radio value="2">选项二</Radio>
               </View>
-            </RadioGroup>
+            </Radio.Group>
           </View>
 
           <View>
             <Text className="mb-3 block font-semibold text-slate-500 text-xs">
               多项选择 (Checkbox)
             </Text>
-            <CheckboxGroup onChange={handleCheckboxChange}>
+            <Checkbox.Group
+              value={checkboxValue}
+              onChange={(vals) => setCheckboxValue(vals as string[])}
+            >
               <View className="flex gap-6">
-                <Checkbox
-                  value="1"
-                  checked={checkboxValue.includes('1')}
-                  color="#10b981"
-                >
-                  选项A
-                </Checkbox>
-                <Checkbox
-                  value="2"
-                  checked={checkboxValue.includes('2')}
-                  color="#10b981"
-                >
-                  选项B
-                </Checkbox>
+                <Checkbox value="1">选项A</Checkbox>
+                <Checkbox value="2">选项B</Checkbox>
               </View>
-            </CheckboxGroup>
+            </Checkbox.Group>
           </View>
 
           <View className="flex items-center justify-between border-slate-100 border-t pt-3">
@@ -152,8 +133,7 @@ export default function FormPage() {
             </View>
             <Switch
               checked={switchValue}
-              color="#6366f1"
-              onChange={(e) => setSwitchValue(e.detail.value)}
+              onChange={(val) => setSwitchValue(val)}
             />
           </View>
         </View>
@@ -162,7 +142,9 @@ export default function FormPage() {
       {/* Form Submission button */}
       <View className="mt-8">
         <Button
-          className="premium-btn w-full rounded-2xl bg-linear-to-r from-indigo-600 to-blue-600 py-3.5 text-center font-bold text-sm text-white shadow-indigo-200 shadow-lg active:scale-98 active:opacity-95"
+          type="primary"
+          block
+          className="rounded-2xl font-bold text-sm shadow-indigo-200 shadow-lg"
           onClick={onSubmit}
         >
           提交表单信息
