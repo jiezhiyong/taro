@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { defineConfig } from '@tarojs/cli';
+import { UnifiedWebpackPluginV5 } from 'weapp-tailwindcss/webpack';
 
 export default defineConfig({
   projectName: 'taro-showcase',
@@ -27,6 +28,21 @@ export default defineConfig({
     postcss: {
       pxtransform: { enable: true },
       cssModules: { enable: false },
+    },
+    webpackChain(chain) {
+      chain.merge({
+        plugin: {
+          install: {
+            plugin: UnifiedWebpackPluginV5,
+            args: [
+              {
+                appType: 'taro',
+                injectAdditionalCssVarScope: true,
+              },
+            ],
+          },
+        },
+      });
     },
   },
   h5: {
