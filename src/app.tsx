@@ -1,6 +1,6 @@
 import { ConfigProvider } from '@nutui/nutui-react-taro';
-import enUS from '@nutui/nutui-react-taro/dist/locales/en-US';
-import zhCN from '@nutui/nutui-react-taro/dist/locales/zh-CN';
+import enUS from '@nutui/nutui-react-taro/dist/es/locales/en-US';
+import zhCN from '@nutui/nutui-react-taro/dist/es/locales/zh-CN';
 import { useLaunch } from '@tarojs/taro';
 import type { PropsWithChildren } from 'react';
 import { useLocaleStore } from '@/store/localeStore';
