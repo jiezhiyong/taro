@@ -1,4 +1,3 @@
-
 export default {
-  navigationBarTitleText: "导航组件"
+  navigationBarTitleText: '导航组件',
 };

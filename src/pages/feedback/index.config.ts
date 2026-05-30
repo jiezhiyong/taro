@@ -1,4 +1,3 @@
-
 export default {
-  navigationBarTitleText: "反馈组件"
+  navigationBarTitleText: '反馈组件',
 };

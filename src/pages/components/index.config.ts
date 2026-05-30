@@ -1,4 +1,3 @@
-
 export default {
-  navigationBarTitleText: "基础组件"
+  navigationBarTitleText: '基础组件',
 };

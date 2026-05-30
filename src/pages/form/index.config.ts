@@ -1,4 +1,3 @@
-
 export default {
-  navigationBarTitleText: "表单组件"
+  navigationBarTitleText: '表单组件',
 };

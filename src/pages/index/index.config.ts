@@ -1,4 +1,3 @@
-
 export default {
-  navigationBarTitleText: "Taro Showcase"
+  navigationBarTitleText: 'Taro Showcase',
 };

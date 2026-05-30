@@ -1,14 +1,17 @@
-import { View, Text, Button } from "@tarojs/components";
-import { useState } from "react";
-import "./index.scss";
+import { Text, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import { useState } from 'react';
 
 export default function Feedback() {
   const [toastVisible, setToastVisible] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [toastText, setToastText] = useState('提示信息');
+  const [_toastType, setToastType] = useState('info');
   const [loadingVisible, setLoadingVisible] = useState(false);
   const [skeletonLoading, setSkeletonLoading] = useState(true);
 
-  const showToast = (type) => {
+  const showToast = (type: string, text: string) => {
+    setToastType(type);
+    setToastText(text);
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2000);
   };
@@ -17,181 +20,155 @@ export default function Feedback() {
     setLoadingVisible(true);
     setTimeout(() => {
       setLoadingVisible(false);
-    }, 3000);
+    }, 2500);
+  };
+
+  const showNativeDialog = () => {
+    Taro.showModal({
+      title: '最佳实践确认',
+      content:
+        '这是一个原生弹窗（Modal）最佳实践展示，能自动适配不同终端原生样式。',
+      success: (res) => {
+        if (res.confirm) {
+          Taro.showToast({ title: '已确认', icon: 'success' });
+        }
+      },
+    });
   };
 
   return (
-    <View className="min-h-screen bg-gray-50 p-4 pb-20">
-      {/* Toast 轻提示 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">轻提示 Toast</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini" onClick={() => showToast('text')}>文本提示</Button>
-          <Button size="mini" type="primary" onClick={() => showToast('success')}>成功提示</Button>
-          <Button size="mini" type="warn" onClick={() => showToast('fail')}>失败提示</Button>
-          <Button size="mini" onClick={() => showToast('loading')}>加载提示</Button>
-        </View>
-
-        {/* Toast 效果展示 */}
-        {toastVisible && (
-          <View className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 text-white px-4 py-2 rounded z-50">
-            <Text className="text-white text-center">提示信息</Text>
-          </View>
-        )}
+    <View className="relative min-h-screen bg-slate-50 p-6 pb-20">
+      <View className="mb-6">
+        <Text className="block font-extrabold text-2xl text-slate-800">
+          🔔 反馈与状态
+        </Text>
+        <Text className="mt-1 block text-slate-500 text-xs">
+          高交互性的模态提示、骨架屏及多端状态控制
+        </Text>
       </View>
 
-      {/* Dialog 对话框 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">对话框 Dialog</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini">警告对话框</Button>
-          <Button size="mini" type="primary">确认对话框</Button>
-        </View>
-      </View>
-
-      {/* 消息通知 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">消息通知 Notify</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini">基础通知</Button>
-          <Button size="mini" type="primary">成功通知</Button>
-          <Button size="mini" type="warn">警告通知</Button>
-          <Button size="mini">错误通知</Button>
-        </View>
-
-        {/* 通知效果展示 */}
-        <View className="mt-4 space-y-2">
-          <View className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
-            <Text className="text-blue-700 text-sm">基础通知信息</Text>
+      {/* Toast triggers */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          轻提示 Toast
+        </Text>
+        <View className="grid grid-cols-2 gap-3">
+          <View
+            className="premium-btn rounded-xl bg-slate-100 py-3.5 text-center font-semibold text-slate-700 text-xs"
+            onClick={() => showToast('info', 'ℹ️ 正在拉取云端数据...')}
+          >
+            普通提示
           </View>
-          <View className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
-            <Text className="text-green-700 text-sm">成功通知信息</Text>
+          <View
+            className="premium-btn rounded-xl border border-emerald-100 bg-emerald-50 py-3.5 text-center font-semibold text-emerald-600 text-xs"
+            onClick={() => showToast('success', '✅ 微信授权登录成功')}
+          >
+            成功提示
+          </View>
+          <View
+            className="premium-btn rounded-xl border border-rose-100 bg-rose-50 py-3.5 text-center font-semibold text-rose-600 text-xs"
+            onClick={() => showToast('error', '❌ 上传网络超时，请重试')}
+          >
+            失败提示
+          </View>
+          <View
+            className="premium-btn rounded-xl border border-indigo-100 bg-indigo-50 py-3.5 text-center font-semibold text-indigo-600 text-xs"
+            onClick={showNativeDialog}
+          >
+            原生弹窗
           </View>
         </View>
       </View>
 
-      {/* Loading 加载 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">加载 Loading</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini" onClick={showLoading}>显示加载</Button>
-          <Button size="mini" type="primary" onClick={() => setOverlayVisible(true)}>
-            遮罩层
-          </Button>
-          <Button
-            size="mini"
-            type="warn"
+      {/* Loading Overlay */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          加载 Loading & 遮罩
+        </Text>
+        <View className="flex gap-4">
+          <View
+            className="premium-btn flex-1 rounded-xl bg-indigo-600 py-3.5 text-center font-bold text-white text-xs shadow-indigo-100 shadow-md"
+            onClick={showLoading}
+          >
+            模拟全屏加载
+          </View>
+          <View
+            className="premium-btn flex-1 rounded-xl bg-slate-900 py-3.5 text-center font-bold text-white text-xs"
             onClick={() => setSkeletonLoading(!skeletonLoading)}
           >
-            {skeletonLoading ? '隐藏' : '显示'}骨架屏
-          </Button>
+            切换骨架屏状态
+          </View>
         </View>
-
-        {/* Loading 效果展示 */}
-        {loadingVisible && (
-          <View className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <View className="bg-white p-6 rounded-lg flex items-center">
-              <View className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mr-3"></View>
-              <Text>加载中...</Text>
-            </View>
-          </View>
-        )}
-
-        {/* 遮罩层效果 */}
-        {overlayVisible && (
-          <View
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setOverlayVisible(false)}
-          >
-            <View className="bg-white p-6 rounded-lg">
-              <Text>点击遮罩层关闭</Text>
-            </View>
-          </View>
-        )}
       </View>
 
-      {/* 骨架屏 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">骨架屏 Skeleton</Text>
+      {/* Skeleton Loading */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          智能骨架屏 Skeleton
+        </Text>
         {skeletonLoading ? (
-          <View className="flex">
-            <View className="w-12 h-12 bg-gray-200 rounded-full mr-3 animate-pulse"></View>
-            <View className="flex-1">
-              <View className="h-4 bg-gray-200 rounded mb-2 animate-pulse"></View>
-              <View className="h-3 bg-gray-200 rounded w-3/4 animate-pulse"></View>
+          <View className="flex items-center">
+            <View className="mr-4 h-12 w-12 shrink-0 animate-pulse rounded-2xl bg-slate-200" />
+            <View className="flex-1 space-y-2">
+              <View className="h-4 w-1/3 animate-pulse rounded-lg bg-slate-200" />
+              <View className="h-3 w-3/4 animate-pulse rounded-lg bg-slate-200" />
             </View>
           </View>
         ) : (
-          <View className="flex">
-            <View className="w-12 h-12 bg-gray-200 rounded-full mr-3"></View>
+          <View className="flex items-center">
+            <View className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-linear-to-tr from-indigo-500 to-blue-600 font-extrabold text-white shadow-md">
+              JD
+            </View>
             <View className="flex-1">
-              <Text className="text-lg font-bold">用户名</Text>
-              <Text className="text-gray-600 text-sm">
-                这是用户的个人简介内容，当数据加载完成后会显示真实内容。
+              <Text className="block font-bold text-slate-800 text-sm">
+                云端用户: DeepMind-AI
+              </Text>
+              <Text className="mt-1 block text-slate-400 text-xs">
+                由 Taro-best-practices 渲染完成
               </Text>
             </View>
           </View>
         )}
       </View>
 
-      {/* Empty 空状态 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">空状态 Empty</Text>
-        <View className="text-center py-8">
-          <Text className="text-6xl mb-4">📭</Text>
-          <Text className="text-gray-500">暂无数据</Text>
+      {/* Success/Error Results */}
+      <View className="premium-card border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          多态结果页 Result
+        </Text>
+        <View className="rounded-2xl border border-slate-100 bg-slate-50/50 p-6 text-center">
+          <View className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-2xl shadow-inner">
+            ✨
+          </View>
+          <Text className="block font-extrabold text-base text-slate-800">
+            操作执行完毕
+          </Text>
+          <Text className="mx-auto mt-2 block max-w-xs text-slate-500 text-xs leading-relaxed">
+            数据记录已经过 Alipay 自动序列化转换并推送到后台服务器。
+          </Text>
         </View>
       </View>
 
-      {/* Result 结果页 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">结果页 Result</Text>
-        <View className="space-y-6">
-          <View className="text-center py-4">
-            <Text className="text-4xl mb-2">✅</Text>
-            <Text className="text-lg font-bold mb-2">操作成功</Text>
-            <Text className="text-gray-600 text-sm mb-4">订单已提交成功，我们将尽快为您处理</Text>
-            <View className="flex gap-2 justify-center">
-              <Button size="mini" type="primary">返回首页</Button>
-              <Button size="mini">查看订单</Button>
-            </View>
-          </View>
+      {/* Custom absolute Toast container */}
+      {toastVisible && (
+        <View className="absolute top-1/2 left-1/2 z-50 flex max-w-xs -translate-x-1/2 -translate-y-1/2 animate-fade-in items-center justify-center rounded-2xl border border-white/10 bg-slate-900/95 px-6 py-4 shadow-xl backdrop-blur-md">
+          <Text className="text-center font-bold text-white text-xs leading-relaxed">
+            {toastText}
+          </Text>
+        </View>
+      )}
 
-          <View className="text-center py-4 border-t border-gray-100">
-            <Text className="text-4xl mb-2">❌</Text>
-            <Text className="text-lg font-bold mb-2">操作失败</Text>
-            <Text className="text-gray-600 text-sm mb-4">很抱歉，操作失败，请稍后再试</Text>
-            <Button size="mini" type="primary">重新尝试</Button>
+      {/* Screen Loading Mask overlay */}
+      {loadingVisible && (
+        <View className="absolute inset-0 z-50 flex animate-fade-in items-center justify-center bg-slate-950/70">
+          <View className="premium-card flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-6 shadow-2xl">
+            <View className="mb-3 h-8 w-8 animate-spin rounded-full border-3 border-indigo-600 border-t-transparent" />
+            <Text className="font-semibold text-slate-600 text-xs">
+              云端数据载入中...
+            </Text>
           </View>
         </View>
-      </View>
-
-      {/* 反馈状态展示 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">反馈状态示例</Text>
-        <View className="space-y-0">
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>成功状态</Text>
-            <Text>✅</Text>
-          </View>
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>警告状态</Text>
-            <Text>⚠️</Text>
-          </View>
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>错误状态</Text>
-            <Text>❌</Text>
-          </View>
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>信息状态</Text>
-            <Text>ℹ️</Text>
-          </View>
-          <View className="flex justify-between items-center p-3">
-            <Text>加载状态</Text>
-            <Text>🔄</Text>
-          </View>
-        </View>
-      </View>
+      )}
     </View>
   );
 }

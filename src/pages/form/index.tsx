@@ -1,6 +1,16 @@
-import { View, Text, Input, Button, Switch, Checkbox, Radio, RadioGroup, CheckboxGroup } from "@tarojs/components";
-import { useState } from "react";
-import "./index.scss";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Input,
+  Radio,
+  RadioGroup,
+  Switch,
+  Text,
+  View,
+} from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import { useState } from 'react';
 
 export default function FormPage() {
   const [switchValue, setSwitchValue] = useState(false);
@@ -8,158 +18,155 @@ export default function FormPage() {
   const [checkboxValue, setCheckboxValue] = useState(['1']);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [description, setDescription] = useState('');
+
+  const handleCheckboxChange = (e: { detail: { value: string[] } }) => {
+    setCheckboxValue(e.detail.value);
+  };
 
   const onSubmit = () => {
-    console.log('表单值:', { username, password, description, switchValue, radioValue, checkboxValue });
-    // 简单的 alert 提示
-    console.log('提交成功！');
+    if (!username) {
+      Taro.showToast({
+        title: '请输入用户名',
+        icon: 'none',
+        duration: 2000,
+      });
+      return;
+    }
+
+    Taro.showToast({
+      title: '表单提交成功',
+      icon: 'success',
+      duration: 2000,
+    });
+    console.log('表单值:', {
+      username,
+      password,
+      switchValue,
+      radioValue,
+      checkboxValue,
+    });
   };
 
   return (
-    <View className="min-h-screen bg-gray-50 p-4 pb-20">
-      {/* 基础输入组件 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">基础输入</Text>
+    <View className="min-h-screen bg-slate-50 p-6 pb-20">
+      <View className="mb-6">
+        <Text className="block font-extrabold text-2xl text-slate-800">
+          ✍️ 表单组件
+        </Text>
+        <Text className="mt-1 block text-slate-500 text-xs">
+          符合多端运行的表单交互和原生元素重绘效果
+        </Text>
+      </View>
+
+      {/* Basic Inputs */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          基础输入 fields
+        </Text>
 
         <View className="space-y-4">
           <View>
-            <Text className="text-sm text-gray-600 mb-2">用户名</Text>
+            <Text className="mb-2 block font-semibold text-slate-500 text-xs">
+              用户名 *
+            </Text>
             <Input
-              className="w-full p-3 border border-gray-200 rounded"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm transition-all focus:border-indigo-500 focus:bg-white"
               placeholder="请输入用户名"
+              placeholderStyle="color: #cbd5e1"
               value={username}
               onInput={(e) => setUsername(e.detail.value)}
             />
           </View>
 
           <View>
-            <Text className="text-sm text-gray-600 mb-2">密码</Text>
+            <Text className="mb-2 block font-semibold text-slate-500 text-xs">
+              密码 *
+            </Text>
             <Input
-              className="w-full p-3 border border-gray-200 rounded"
-              type="password"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm transition-all focus:border-indigo-500 focus:bg-white"
+              type="safe-password"
               placeholder="请输入密码"
+              placeholderStyle="color: #cbd5e1"
               value={password}
               onInput={(e) => setPassword(e.detail.value)}
             />
           </View>
-
-          <View>
-            <Text className="text-sm text-gray-600 mb-2">个人简介</Text>
-            <View className="w-full p-3 border border-gray-200 rounded min-h-20">
-              <Text className="text-gray-400 text-sm">这里是文本域效果</Text>
-            </View>
-          </View>
         </View>
       </View>
 
-      {/* 选择组件 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">选择组件</Text>
+      {/* Selectors */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          选项与开关 Selectors
+        </Text>
 
         <View className="space-y-6">
           <View>
-            <Text className="text-sm text-gray-600 mb-3">单选按钮</Text>
+            <Text className="mb-3 block font-semibold text-slate-500 text-xs">
+              单项选择 (Radio)
+            </Text>
             <RadioGroup onChange={(e) => setRadioValue(e.detail.value)}>
-              <View className="flex gap-4">
-                <Radio value="1" checked={radioValue === '1'} color="#FA2C19">选项1</Radio>
-                <Radio value="2" checked={radioValue === '2'} color="#FA2C19">选项2</Radio>
+              <View className="flex gap-6">
+                <Radio value="1" checked={radioValue === '1'} color="#6366f1">
+                  选项一
+                </Radio>
+                <Radio value="2" checked={radioValue === '2'} color="#6366f1">
+                  选项二
+                </Radio>
               </View>
             </RadioGroup>
           </View>
 
           <View>
-            <Text className="text-sm text-gray-600 mb-3">复选框</Text>
-            <CheckboxGroup>
-              <View className="flex gap-4 flex-wrap">
-                <Checkbox value="1" color="#FA2C19">选项1</Checkbox>
-                <Checkbox value="2" color="#FA2C19">选项2</Checkbox>
-                <Checkbox value="3" color="#FA2C19">选项3</Checkbox>
+            <Text className="mb-3 block font-semibold text-slate-500 text-xs">
+              多项选择 (Checkbox)
+            </Text>
+            <CheckboxGroup onChange={handleCheckboxChange}>
+              <View className="flex gap-6">
+                <Checkbox
+                  value="1"
+                  checked={checkboxValue.includes('1')}
+                  color="#10b981"
+                >
+                  选项A
+                </Checkbox>
+                <Checkbox
+                  value="2"
+                  checked={checkboxValue.includes('2')}
+                  color="#10b981"
+                >
+                  选项B
+                </Checkbox>
               </View>
             </CheckboxGroup>
           </View>
 
-          <View className="flex justify-between items-center">
-            <Text className="text-sm text-gray-600">开关</Text>
+          <View className="flex items-center justify-between border-slate-100 border-t pt-3">
+            <View>
+              <Text className="block font-semibold text-slate-800 text-sm">
+                启用消息通知
+              </Text>
+              <Text className="mt-0.5 block text-slate-400 text-xs">
+                接收系统相关动态推送
+              </Text>
+            </View>
             <Switch
               checked={switchValue}
-              color="#FA2C19"
+              color="#6366f1"
               onChange={(e) => setSwitchValue(e.detail.value)}
             />
           </View>
         </View>
       </View>
 
-      {/* 选择器效果 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">选择器效果</Text>
-
-        <View className="space-y-3">
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>单列选择</Text>
-            <View className="flex items-center">
-              <Text className="text-gray-500 mr-2">选项一</Text>
-              <Text className="text-gray-400">></Text>
-            </View>
-          </View>
-
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>日期选择</Text>
-            <View className="flex items-center">
-              <Text className="text-gray-500 mr-2">2026-03-26</Text>
-              <Text className="text-gray-400">></Text>
-            </View>
-          </View>
-
-          <View className="flex justify-between items-center p-3">
-            <Text>时间选择</Text>
-            <View className="flex items-center">
-              <Text className="text-gray-500 mr-2">12:00</Text>
-              <Text className="text-gray-400">></Text>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      {/* 表单验证示例 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">表单验证</Text>
-
-        <View className="space-y-4">
-          <View>
-            <Text className="text-sm text-gray-600 mb-2">必填项 *</Text>
-            <Input
-              className="w-full p-3 border border-gray-200 rounded"
-              placeholder="此项为必填项"
-            />
-          </View>
-
-          <View>
-            <Text className="text-sm text-gray-600 mb-2">最小长度（6个字符）</Text>
-            <Input
-              className="w-full p-3 border border-gray-200 rounded"
-              placeholder="最少6个字符"
-            />
-          </View>
-
-          <View>
-            <Text className="text-sm text-gray-600 mb-2">数字输入</Text>
-            <Input
-              className="w-full p-3 border border-gray-200 rounded"
-              type="number"
-              placeholder="只能输入数字"
-            />
-          </View>
-        </View>
-
-        <View className="mt-6">
-          <Button
-            className="w-full bg-blue-500 text-white rounded-lg p-3"
-            onClick={onSubmit}
-          >
-            提交表单
-          </Button>
-        </View>
+      {/* Form Submission button */}
+      <View className="mt-8">
+        <Button
+          className="premium-btn w-full rounded-2xl bg-linear-to-r from-indigo-600 to-blue-600 py-3.5 text-center font-bold text-sm text-white shadow-indigo-200 shadow-lg active:scale-98 active:opacity-95"
+          onClick={onSubmit}
+        >
+          提交表单信息
+        </Button>
       </View>
     </View>
   );

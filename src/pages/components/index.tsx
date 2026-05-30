@@ -1,36 +1,72 @@
-import { View, Text } from "@tarojs/components";
-import "./index.scss";
+import { Text, View } from '@tarojs/components';
 
 export default function Components() {
   return (
-    <View className="container p-4">
-      <Text className="text-xl font-bold mb-4">基础组件展示</Text>
+    <View className="min-h-screen bg-slate-50 p-6 pb-12">
+      <View className="mt-2 mb-6">
+        <Text className="block font-extrabold text-2xl text-slate-800">
+          🧩 基础组件
+        </Text>
+        <Text className="mt-1 block text-slate-500 text-xs">
+          符合 React Native 与跨端兼容的标准组件设计
+        </Text>
+      </View>
 
-      <View className="bg-white rounded-lg p-4 mb-4">
-        <Text className="text-lg font-semibold mb-2">按钮组件</Text>
-        <View className="space-y-2">
-          <View className="bg-blue-500 text-white p-2 rounded text-center">主要按钮</View>
-          <View className="bg-green-500 text-white p-2 rounded text-center">成功按钮</View>
-          <View className="bg-yellow-500 text-white p-2 rounded text-center">警告按钮</View>
-          <View className="bg-red-500 text-white p-2 rounded text-center">危险按钮</View>
+      {/* Button styles */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          交互式按钮 Buttons
+        </Text>
+        <View className="space-y-3">
+          <View className="premium-btn w-full rounded-xl bg-linear-to-r from-blue-500 to-indigo-600 py-3 text-center font-semibold text-sm text-white shadow-md transition-all active:scale-98 active:opacity-90">
+            主要按钮 (Primary)
+          </View>
+          <View className="premium-btn w-full rounded-xl bg-linear-to-r from-emerald-500 to-teal-600 py-3 text-center font-semibold text-sm text-white shadow-md transition-all active:scale-98 active:opacity-90">
+            成功按钮 (Success)
+          </View>
+          <View className="premium-btn w-full rounded-xl bg-linear-to-r from-amber-500 to-orange-600 py-3 text-center font-semibold text-sm text-white shadow-md transition-all active:scale-98 active:opacity-90">
+            警告按钮 (Warning)
+          </View>
+          <View className="premium-btn w-full rounded-xl bg-linear-to-r from-rose-500 to-red-600 py-3 text-center font-semibold text-sm text-white shadow-md transition-all active:scale-98 active:opacity-90">
+            危险按钮 (Danger)
+          </View>
         </View>
       </View>
 
-      <View className="bg-white rounded-lg p-4 mb-4">
-        <Text className="text-lg font-semibold mb-2">标签组件</Text>
-        <View className="flex flex-wrap gap-2">
-          <View className="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm">主要标签</View>
-          <View className="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">成功标签</View>
-          <View className="bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-sm">警告标签</View>
-          <View className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">危险标签</View>
+      {/* Badge/Tags styles */}
+      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          语义化标签 Badges
+        </Text>
+        <View className="flex flex-wrap gap-3">
+          <View className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 font-semibold text-blue-600 text-xs">
+            主要标签
+          </View>
+          <View className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 font-semibold text-emerald-600 text-xs">
+            成功标签
+          </View>
+          <View className="rounded-full border border-amber-100 bg-amber-50 px-3 py-1.5 font-semibold text-amber-600 text-xs">
+            警告标签
+          </View>
+          <View className="rounded-full border border-rose-100 bg-rose-50 px-3 py-1.5 font-semibold text-rose-600 text-xs">
+            危险标签
+          </View>
         </View>
       </View>
 
-      <View className="bg-white rounded-lg p-4">
-        <Text className="text-lg font-semibold mb-2">卡片组件</Text>
-        <View className="border border-gray-200 rounded p-3">
-          <Text className="font-medium">卡片标题</Text>
-          <Text className="text-sm text-gray-600 mt-1">这是一个简单的卡片组件示例</Text>
+      {/* Premium custom card style */}
+      <View className="premium-card border border-slate-100 bg-white p-6 shadow-sm">
+        <Text className="mb-4 block font-bold text-base text-slate-800">
+          优雅卡片 Premium Card
+        </Text>
+        <View className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4">
+          <Text className="block font-bold text-slate-800 text-sm">
+            模块化设计核心
+          </Text>
+          <Text className="mt-2 block text-slate-500 text-xs leading-relaxed">
+            卡片是所有跨端视口的基础容器，符合 Flex-only 排布规范，可完美适配
+            React Native 端。
+          </Text>
         </View>
       </View>
     </View>
