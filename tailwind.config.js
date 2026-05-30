@@ -1,10 +1,10 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   corePlugins: {
-    preflight: false
+    preflight: false,
   },
   theme: {
-    extend: {}
+    extend: {},
   },
-  plugins: []
-}
+  plugins: [],
+};
