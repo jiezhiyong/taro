@@ -1,59 +1,261 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+@import "tailwindcss";
 
+/* ==========================================
+   Design System Inspired by Claude (Anthropic)
+   ========================================== */
+
+:root {
+  /* Typography fallback stack */
+  --font-sans:
+    "Anthropic Sans", "Outfit", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Anthropic Serif", "Georgia", serif;
+  --font-mono:
+    "Anthropic Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+    Courier, monospace;
+
+  /* Exclusive Warm Neutral Palette (Light Mode - Parchment & Ivory) */
+  --background: #f5f4ed; /* Parchment canvas */
+  --foreground: #141413; /* Anthropic Near Black */
+
+  --card: #faf9f5; /* Ivory card surface */
+  --card-foreground: #141413;
+
+  --primary: #c96442; /* Terracotta Brand Accent */
+  --primary-foreground: #faf9f5;
+
+  --secondary: #e8e6dc; /* Warm Sand */
+  --secondary-foreground: #4d4c48; /* Charcoal Warm */
+
+  --accent: #e8e6dc;
+  --accent-foreground: #4d4c48;
+
+  --muted-foreground: #5e5d59; /* Olive Gray */
+
+  --border: #f0eee6; /* Border Cream (barely visible) */
+  --input: #e8e6dc; /* Border Warm */
+
+  --ring: #3898ec; /* Focus Blue (purely for accessibility) */
+  --destructive: #b53333; /* Error Crimson */
+
+  /* Semantic Highlights (Warm-Toned) */
+  --success: #387a5f; /* Warm Muted Green */
+  --warning: #b87a3b; /* Warm Terracotta Yellow */
+
+  /* Ring & Soft Depth Elevation */
+  --shadow-ring: 0px 0px 0px 1px #d1cfc5; /* Ring Warm shadow-ring */
+  --shadow-whisper:
+    0px 10px 25px -5px rgba(20, 20, 19, 0.05),
+    0px 8px 10px -6px rgba(20, 20, 19, 0.05);
+
+  /* NutUI v3 CSS Variables Mapping (Light Mode) */
+  --nutui-brand-color: var(--primary);
+  --nutui-brand-color-start: var(--primary);
+  --nutui-brand-color-end: var(--primary);
+  --nutui-link-color: var(--primary);
+  --nutui-text-color: var(--foreground);
+  --nutui-title-color: var(--foreground);
+  --nutui-border-color: var(--border);
+  --nutui-gray-background: var(--secondary);
+}
+
+.dark {
+  /* Exclusive Warm Neutral Palette (Dark Mode - Deep Dark & Charcoal) */
+  --background: #141413; /* Deep Dark */
+  --foreground: #faf9f5; /* Ivory */
+
+  --card: #30302e; /* Dark Surface */
+  --card-foreground: #faf9f5;
+
+  --primary: #c96442; /* Terracotta Brand Accent */
+  --primary-foreground: #141413;
+
+  --secondary: #30302e; /* Dark Surface */
+  --secondary-foreground: #b0aea5; /* Warm Silver */
+
+  --accent: #30302e;
+  --accent-foreground: #b0aea5;
+
+  --muted-foreground: #b0aea5; /* Warm Silver */
+
+  --border: #30302e; /* Border Dark */
+  --input: #30302e;
+
+  --ring: #3898ec; /* Focus Blue */
+  --destructive: #b53333; /* Error Crimson */
+
+  /* Semantic Highlights (Warm-Toned Dark Mode) */
+  --success: #6ba88f;
+  --warning: #d49c63;
+
+  /* Ring & Soft Depth Elevation (Dark Mode) */
+  --shadow-ring: 0px 0px 0px 1px #30302e;
+  --shadow-whisper:
+    0px 10px 25px -5px rgba(0, 0, 0, 0.3), 0px 8px 10px -6px rgba(0, 0, 0, 0.3);
+
+  /* NutUI v3 CSS Variables Mapping (Dark Mode) */
+  --nutui-brand-color: var(--primary);
+  --nutui-brand-color-start: var(--primary);
+  --nutui-brand-color-end: var(--primary);
+  --nutui-link-color: var(--primary);
+  --nutui-text-color: var(--foreground);
+  --nutui-title-color: var(--foreground);
+  --nutui-border-color: var(--border);
+  --nutui-gray-background: var(--secondary);
+}
+
+/* ==========================================
+   Tailwind CSS v4 Theme Token Configurations
+   ========================================== */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --shadow-ring: var(--shadow-ring);
+  --shadow-whisper: var(--shadow-whisper);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  --radius-xs: 4px; /* Sharp */
+  --radius-sm: 6px; /* Subtly rounded */
+  --radius-md: 8px; /* Comfortably rounded */
+  --radius-lg: 12px; /* Generously rounded */
+  --radius-xl: 16px; /* Very rounded */
+  --radius-2xl: 24px; /* Highly rounded */
+  --radius-3xl: 32px; /* Maximum rounded */
+}
+
+/* ==========================================
+   Base Elements & Global Compatible Box Model
+   ========================================== */
+view,
+text,
+button,
+scroll-view,
+swiper,
+image {
+  box-sizing: border-box;
+}
+
+/* Page canvas background & typography defaults */
 page {
-  background-color: #f5f5f5;
+  background-color: var(--background);
+  font-family: var(--font-sans);
+  color: var(--foreground);
+  line-height: 1.6; /* Relaxed body line-height */
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 基础样式 */
-.container {
-  padding: 16px;
+/* Clear standard button default pseudo-borders in WeChat Mini Program */
+button::after {
+  display: none;
 }
 
+/* ==========================================
+   Component Styling Classes
+   ========================================== */
+
+/* Premium Card with smooth hover/active micro-interactions */
+.premium-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl); /* 16px */
+  box-shadow: var(--shadow-whisper);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-ring);
+}
+
+/* Standard editorial card container */
 .card {
-  background: white;
-  border-radius: 8px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md); /* 8px */
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-whisper);
 }
 
+/* Georgia Serif titles with medium weight (500) limit */
 .title {
+  font-family: var(--font-serif);
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 500; /* Strict 500 weight ceiling for serifs */
+  line-height: 1.25;
   margin-bottom: 8px;
+  color: var(--foreground);
 }
 
-.text-primary {
-  color: #007aff;
-}
-
-.text-success {
-  color: #34c759;
-}
-
-.text-warning {
-  color: #ff9500;
-}
-
-.text-danger {
-  color: #ff3b30;
-}
-
+/* Warm, literary-inspired buttons */
 .btn {
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: none;
+  font-family: var(--font-sans);
   font-size: 14px;
+  font-weight: 500;
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  box-shadow: var(--shadow-ring);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.btn:active {
+  transform: scale(0.98);
+  box-shadow: inset 0px 0px 0px 1px rgba(20, 20, 19, 0.15); /* Inset deep active shadow */
+}
+
+/* Terracotta brand button */
 .btn-primary {
-  background-color: #007aff;
-  color: white;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .btn-mini {
   padding: 4px 8px;
   font-size: 12px;
+}
+
+/* Container spacing adapter */
+.container {
+  padding: 16px;
+}
+
+/* ==========================================
+   Semantic Supporting Text Classes
+   ========================================== */
+.text-primary {
+  color: var(--primary);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-danger {
+  color: var(--destructive);
 }
