@@ -11,3 +11,4 @@ coverage/
 .rn_temp/
 .output/
 .env.local
+.swc/
