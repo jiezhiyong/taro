@@ -154,7 +154,7 @@ image {
   box-sizing: border-box;
 }
 
-/* 
+/*
    Fix Tailwind CSS v4 Native Cascade Layer conflict with Taro H5 Components:
    Since the taro-view-core default `display: block` style is injected dynamically as an UNLAYERED style,
    it overrides Tailwind's LAYERED utility classes (.grid, .flex, etc.) regardless of specificity.
@@ -181,6 +181,15 @@ taro-view-core.block {
 taro-view-core.hidden {
   display: none;
 }
+taro-text-core.block {
+  display: block;
+}
+taro-text-core.inline-block {
+  display: inline-block;
+}
+taro-text-core.hidden {
+  display: none;
+}
 
 /* Page canvas background & typography defaults */
 page {
@@ -194,96 +203,4 @@ page {
 /* Clear standard button default pseudo-borders in WeChat Mini Program */
 button::after {
   display: none;
-}
-
-/* ==========================================
-   Component Styling Classes
-   ========================================== */
-
-/* Premium Card with smooth hover/active micro-interactions */
-.premium-card {
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl); /* 16px */
-  box-shadow: var(--shadow-whisper);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.premium-card:active {
-  transform: scale(0.98);
-  box-shadow: var(--shadow-ring);
-}
-
-/* Standard editorial card container */
-.card {
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md); /* 8px */
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-whisper);
-}
-
-/* Georgia Serif titles with medium weight (500) limit */
-.title {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 500; /* Strict 500 weight ceiling for serifs */
-  line-height: 1.25;
-  margin-bottom: 8px;
-  color: var(--foreground);
-}
-
-/* Warm, literary-inspired buttons */
-.btn {
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  border: none;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
-  background-color: var(--secondary);
-  color: var(--secondary-foreground);
-  box-shadow: var(--shadow-ring);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn:active {
-  transform: scale(0.98);
-  box-shadow: inset 0px 0px 0px 1px rgba(20, 20, 19, 0.15); /* Inset deep active shadow */
-}
-
-/* Terracotta brand button */
-.btn-primary {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-}
-
-.btn-mini {
-  padding: 4px 8px;
-  font-size: 12px;
-}
-
-/* Container spacing adapter */
-.container {
-  padding: 16px;
-}
-
-/* ==========================================
-   Semantic Supporting Text Classes
-   ========================================== */
-.text-primary {
-  color: var(--primary);
-}
-
-.text-success {
-  color: var(--success);
-}
-
-.text-warning {
-  color: var(--warning);
-}
-
-.text-danger {
-  color: var(--destructive);
 }

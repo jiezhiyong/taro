@@ -5,7 +5,6 @@ coverage/
 *.log
 
 .DS_Store
-.vscode/
 .idea/
 .temp/
 .rn_temp/
