@@ -1,10 +1,13 @@
 node_modules/
 dist/
-.DS_Store
+coverage/
+
 *.log
+
+.DS_Store
 .vscode/
 .idea/
-coverage/
 .temp/
 .rn_temp/
 .output/
+.env.local
