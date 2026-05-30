@@ -1,18 +1,29 @@
 import {
+  Avatar,
+  Button,
   Dialog,
   Loading,
   Overlay,
+  ResultPage,
   Skeleton,
+  Space,
   Toast,
 } from '@nutui/nutui-react-taro';
-import { Text, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
+import {
+  DemoPage,
+  DemoPageHeader,
+  DemoSection,
+} from '@/components/demo-layout';
 
 export default function Feedback() {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastText, setToastText] = useState('提示信息');
-  const [toastIcon, setToastIcon] = useState<'success' | 'fail' | 'warn' | 'loading' | null>(null);
+  const [toastIcon, setToastIcon] = useState<
+    'success' | 'fail' | 'warn' | 'loading' | null
+  >(null);
   const [loadingVisible, setLoadingVisible] = useState(false);
   const [skeletonLoading, setSkeletonLoading] = useState(true);
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -36,116 +47,96 @@ export default function Feedback() {
     }, 2500);
   };
 
-  const showNativeDialog = () => {
-    setDialogVisible(true);
-  };
-
   return (
-    <View className="relative min-h-screen bg-background p-6 pb-20 font-sans">
-      <View className="mb-6">
-        <Text className="block font-medium font-serif text-2xl text-foreground">
-          🔔 反馈与状态
-        </Text>
-        <Text className="mt-1 block font-sans text-muted-foreground text-xs">
-          高交互性的模态提示、骨架屏及多端状态控制
-        </Text>
-      </View>
+    <DemoPage>
+      <DemoPageHeader
+        title="🔔 反馈与状态"
+        description="高交互性的模态提示、遮罩面板、智能骨架屏及多端统一的全局状态反馈"
+      />
 
-      {/* Toast triggers */}
-      <View className="premium-card mb-6 p-6">
-        <Text className="mb-4 block font-medium font-serif text-base text-foreground">
-          轻提示 Toast
-        </Text>
+      <DemoSection title="轻提示 Toast">
         <View className="grid grid-cols-2 gap-3">
-          <View
-            className="w-full rounded-lg border border-input bg-secondary py-3.5 text-center font-semibold text-secondary-foreground text-xs shadow-ring active:scale-98"
+          <Button
+            type="info"
+            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
             onClick={() => showToast('info', 'ℹ️ 正在拉取云端数据...')}
           >
             普通提示
-          </View>
-          <View
-            className="w-full rounded-lg border border-success/30 bg-success/15 py-3.5 text-center font-semibold text-success text-xs active:scale-98"
+          </Button>
+          <Button
+            type="success"
+            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
             onClick={() => showToast('success', '✅ 微信授权登录成功')}
           >
             成功提示
-          </View>
-          <View
-            className="w-full rounded-lg border border-destructive/30 bg-destructive/15 py-3.5 text-center font-semibold text-destructive text-xs active:scale-98"
+          </Button>
+          <Button
+            type="danger"
+            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
             onClick={() => showToast('error', '❌ 上传网络超时，请重试')}
           >
             失败提示
-          </View>
-          <View
-            className="w-full rounded-lg bg-primary py-3.5 text-center font-semibold text-primary-foreground text-xs shadow-ring active:scale-98"
-            onClick={showNativeDialog}
+          </Button>
+          <Button
+            type="primary"
+            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
+            onClick={() => setDialogVisible(true)}
           >
-            原生弹窗
-          </View>
+            模块弹窗
+          </Button>
         </View>
-      </View>
+      </DemoSection>
 
-      {/* Loading Overlay */}
-      <View className="premium-card mb-6 p-6">
-        <Text className="mb-4 block font-medium font-serif text-base text-foreground">
-          加载 Loading & 遮罩
-        </Text>
-        <View className="flex gap-4">
-          <View
-            className="flex-1 rounded-lg bg-primary py-3.5 text-center font-semibold text-primary-foreground text-xs shadow-ring active:scale-98"
+      <DemoSection title="加载 Loading & 遮罩">
+        <Space className="w-full">
+          <Button
+            type="primary"
+            className="flex-1 rounded-lg py-3 font-semibold text-xs shadow-ring"
             onClick={showLoading}
           >
-            模拟全屏加载
-          </View>
-          <View
-            className="flex-1 rounded-lg border border-input bg-secondary py-3.5 text-center font-semibold text-secondary-foreground text-xs shadow-ring active:scale-98"
+            全屏加载
+          </Button>
+          <Button
+            type="default"
+            className="flex-1 rounded-lg border border-input bg-secondary py-3 font-semibold text-secondary-foreground text-xs shadow-ring"
             onClick={() => setSkeletonLoading(!skeletonLoading)}
           >
-            切换骨架屏状态
-          </View>
-        </View>
-      </View>
+            骨架屏切换
+          </Button>
+        </Space>
+      </DemoSection>
 
-      {/* Skeleton Loading */}
-      <View className="premium-card mb-6 p-6">
-        <Text className="mb-4 block font-medium font-serif text-base text-foreground">
-          智能骨架屏 Skeleton
-        </Text>
+      <DemoSection title="智能骨架屏 Skeleton">
         <Skeleton rows={3} animated visible={!skeletonLoading}>
-          <View className="flex items-center">
-            <View className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary font-semibold text-primary-foreground text-sm shadow-ring">
+          <View className="flex items-center gap-4 rounded-lg bg-secondary/10 p-2">
+            <Avatar
+              size="large"
+              background="var(--primary)"
+              color="var(--primary-foreground)"
+            >
               JD
-            </View>
-            <View className="flex-1">
-              <Text className="block font-semibold text-foreground text-sm">
+            </Avatar>
+            <View className="flex min-w-0 flex-1 flex-col gap-1">
+              <View className="font-semibold text-foreground text-sm">
                 云端用户: DeepMind-AI
-              </Text>
-              <Text className="mt-1 block text-muted-foreground text-xs">
-                由 Taro-best-practices 渲染完成
-              </Text>
+              </View>
+              <View className="text-muted-foreground text-xs">
+                由 Taro-best-practices 编译渲染完成
+              </View>
             </View>
           </View>
         </Skeleton>
-      </View>
+      </DemoSection>
 
-      {/* Success/Error Results */}
-      <View className="premium-card p-6">
-        <Text className="mb-4 block font-medium font-serif text-base text-foreground">
-          多态结果页 Result
-        </Text>
-        <View className="rounded-xl border border-border bg-secondary/40 p-6 text-center">
-          <View className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-2xl shadow-inner">
-            ✨
-          </View>
-          <Text className="block font-medium font-serif text-base text-foreground">
-            操作执行完毕
-          </Text>
-          <Text className="mx-auto mt-2 block max-w-xs text-muted-foreground text-xs leading-relaxed">
-            数据记录已经过 Alipay 自动序列化转换并推送到后台服务器。
-          </Text>
-        </View>
-      </View>
+      <DemoSection title="多态结果页 ResultPage">
+        <ResultPage
+          status="success"
+          title="操作执行完毕"
+          description="数据记录已经过序列化转换并推送到后台服务器。"
+          className="rounded-xl border border-border bg-secondary/35 py-4 shadow-ring"
+        />
+      </DemoSection>
 
-      {/* NutUI Declarative Toast */}
       <Toast
         visible={toastVisible}
         content={toastText}
@@ -153,7 +144,6 @@ export default function Feedback() {
         onClose={() => setToastVisible(false)}
       />
 
-      {/* NutUI Dialog Component */}
       <Dialog
         visible={dialogVisible}
         title="最佳实践确认"
@@ -165,16 +155,15 @@ export default function Feedback() {
         onCancel={() => setDialogVisible(false)}
       />
 
-      {/* Screen Loading Mask overlay */}
       <Overlay
         visible={loadingVisible}
-        className="flex items-center justify-center bg-[#141413]/60 backdrop-blur-xs"
+        className="flex items-center justify-center bg-foreground/60"
         zIndex={2000}
       >
-        <View className="premium-card flex flex-col items-center justify-center p-6 shadow-whisper">
+        <View className="flex flex-col items-center justify-center rounded-2xl border border-border bg-card p-6 shadow-whisper">
           <Loading direction="vertical">云端数据载入中...</Loading>
         </View>
       </Overlay>
-    </View>
+    </DemoPage>
   );
 }

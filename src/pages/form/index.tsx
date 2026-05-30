@@ -1,13 +1,20 @@
 import {
   Button,
+  Cell,
   Checkbox,
+  Divider,
   Input,
   Radio,
   Switch,
 } from '@nutui/nutui-react-taro';
-import { Text, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
+import {
+  DemoPage,
+  DemoPageHeader,
+  DemoSection,
+} from '@/components/demo-layout';
 
 export default function FormPage() {
   const [switchValue, setSwitchValue] = useState(false);
@@ -41,41 +48,31 @@ export default function FormPage() {
   };
 
   return (
-    <View className="min-h-screen bg-slate-50 p-6 pb-20">
-      <View className="mb-6">
-        <Text className="block font-extrabold text-2xl text-slate-800">
-          ✍️ 表单组件
-        </Text>
-        <Text className="mt-1 block text-slate-500 text-xs">
-          符合多端运行的表单交互和原生元素重绘效果
-        </Text>
-      </View>
+    <DemoPage>
+      <DemoPageHeader
+        title="✍️ 表单组件"
+        description="提供跨端统一样式、交互行为与原生重绘能力的表单录入组件"
+      />
 
-      {/* Basic Inputs */}
-      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
-        <Text className="mb-4 block font-bold text-base text-slate-800">
-          基础输入 fields
-        </Text>
-
+      <DemoSection title="基础输入 Fields">
         <View className="flex flex-col gap-4">
-          <View>
-            <Text className="mb-2 block font-semibold text-slate-500 text-xs">
+          <View className="flex flex-col gap-2">
+            <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
               用户名 *
-            </Text>
+            </View>
             <Input
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:border-indigo-500 focus:bg-white"
+              className="w-full rounded-xl border border-input bg-card px-4 py-2.5 text-sm"
               placeholder="请输入用户名"
               value={username}
               onChange={(val) => setUsername(val)}
             />
           </View>
-
-          <View>
-            <Text className="mb-2 block font-semibold text-slate-500 text-xs">
+          <View className="flex flex-col gap-2">
+            <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
               密码 *
-            </Text>
+            </View>
             <Input
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:border-indigo-500 focus:bg-white"
+              className="w-full rounded-xl border border-input bg-card px-4 py-2.5 text-sm"
               type="password"
               placeholder="请输入密码"
               value={password}
@@ -83,73 +80,64 @@ export default function FormPage() {
             />
           </View>
         </View>
-      </View>
+      </DemoSection>
 
-      {/* Selectors */}
-      <View className="premium-card mb-6 border border-slate-100 bg-white p-6 shadow-sm">
-        <Text className="mb-4 block font-bold text-base text-slate-800">
-          选项与开关 Selectors
-        </Text>
-
-        <View className="flex flex-col gap-6">
-          <View>
-            <Text className="mb-3 block font-semibold text-slate-500 text-xs">
-              单项选择 (Radio)
-            </Text>
-            <Radio.Group
-              value={radioValue}
-              onChange={(val) => setRadioValue(String(val))}
-            >
-              <View className="flex gap-6">
-                <Radio value="1">选项一</Radio>
-                <Radio value="2">选项二</Radio>
-              </View>
-            </Radio.Group>
+      <DemoSection title="选项与开关 Selectors">
+        <View className="flex flex-col gap-2.5">
+          <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+            单项选择 (Radio)
           </View>
-
-          <View>
-            <Text className="mb-3 block font-semibold text-slate-500 text-xs">
-              多项选择 (Checkbox)
-            </Text>
-            <Checkbox.Group
-              value={checkboxValue}
-              onChange={(vals) => setCheckboxValue(vals as string[])}
-            >
-              <View className="flex gap-6">
-                <Checkbox value="1">选项A</Checkbox>
-                <Checkbox value="2">选项B</Checkbox>
-              </View>
-            </Checkbox.Group>
-          </View>
-
-          <View className="flex items-center justify-between border-slate-100 border-t pt-3">
-            <View>
-              <Text className="block font-semibold text-slate-800 text-sm">
-                启用消息通知
-              </Text>
-              <Text className="mt-0.5 block text-slate-400 text-xs">
-                接收系统相关动态推送
-              </Text>
+          <Radio.Group
+            value={radioValue}
+            onChange={(val) => setRadioValue(String(val))}
+          >
+            <View className="flex gap-8 pt-1 font-sans text-sm">
+              <Radio value="1">选项一</Radio>
+              <Radio value="2">选项二</Radio>
             </View>
+          </Radio.Group>
+        </View>
+
+        <Divider />
+
+        <View className="flex flex-col gap-2.5">
+          <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+            多项选择 (Checkbox)
+          </View>
+          <Checkbox.Group
+            value={checkboxValue}
+            onChange={(vals) => setCheckboxValue(vals as string[])}
+          >
+            <View className="flex gap-8 pt-1 font-sans text-sm">
+              <Checkbox value="1">选项 A</Checkbox>
+              <Checkbox value="2">选项 B</Checkbox>
+            </View>
+          </Checkbox.Group>
+        </View>
+
+        <Divider />
+
+        <Cell
+          title="启用消息通知"
+          description="接收系统相关的云端动态推送与消息同步"
+          extra={
             <Switch
               checked={switchValue}
               onChange={(val) => setSwitchValue(val)}
             />
-          </View>
-        </View>
-      </View>
+          }
+          className="rounded-xl"
+        />
+      </DemoSection>
 
-      {/* Form Submission button */}
-      <View className="mt-8">
-        <Button
-          type="primary"
-          block
-          className="rounded-2xl font-bold text-sm shadow-indigo-200 shadow-lg"
-          onClick={onSubmit}
-        >
-          提交表单信息
-        </Button>
-      </View>
-    </View>
+      <Button
+        type="primary"
+        block
+        className="rounded-xl py-3 font-semibold text-xs shadow-ring"
+        onClick={onSubmit}
+      >
+        提交表单信息
+      </Button>
+    </DemoPage>
   );
 }

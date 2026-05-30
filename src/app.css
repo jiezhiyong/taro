@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./styles/page.sass";
 
 /* ==========================================
    Design System Inspired by Claude (Anthropic)
@@ -203,4 +204,17 @@ page {
 /* Clear standard button default pseudo-borders in WeChat Mini Program */
 button::after {
   display: none;
+}
+
+/* ==========================================
+   Global Layout & Component Styling Utilities
+   ========================================== */
+
+/* Enforces uniform side padding (24px), top padding (24px), and bottom clearance (128px) to clear the TabBar */
+.page-wrapper {
+  min-height: 100vh;
+  background-color: var(--background);
+  padding: 24px;
+  padding-bottom: 128px;
+  box-sizing: border-box;
 }

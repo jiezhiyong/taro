@@ -1,7 +1,16 @@
-import { Button, Input, Tag } from '@nutui/nutui-react-taro';
-import { Text, View } from '@tarojs/components';
+import {
+  Avatar,
+  Button,
+  Cell,
+  Divider,
+  Input,
+  Space,
+  Tag,
+} from '@nutui/nutui-react-taro';
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
+import { DemoPage, DemoSection } from '@/components/demo-layout';
 import { useCounterStore } from '@/store/counterStore';
 import { useUserStore } from '@/store/userStore';
 
@@ -10,6 +19,14 @@ interface ActionLog {
   time: string;
   action: string;
 }
+
+const COLOR_PRESETS = [
+  { value: 'var(--primary)', label: '陶土橙' },
+  { value: 'var(--success)', label: '暖绿' },
+  { value: 'var(--warning)', label: '琥珀' },
+  { value: 'var(--destructive)', label: '赤褐' },
+  { value: 'var(--foreground)', label: '墨黑' },
+];
 
 export default function ZustandShowcase() {
   const {
@@ -27,7 +44,6 @@ export default function ZustandShowcase() {
     resetProfile,
   } = useUserStore();
 
-  // 局部状态：用户输入框 & 操作日志流水
   const [newTag, setNewTag] = useState('');
   const [logs, setLogs] = useState<ActionLog[]>([
     {
@@ -95,262 +111,225 @@ export default function ZustandShowcase() {
     Taro.navigateBack();
   };
 
-  const colorPresets = [
-    { value: '#4f46e5', label: '靛蓝' },
-    { value: '#10b981', label: '翡翠' },
-    { value: '#f43f5e', label: '玫瑰' },
-    { value: '#f59e0b', label: '琥珀' },
-    { value: '#8b5cf6', label: '紫罗兰' },
-  ];
-
   return (
-    <View className="min-h-screen bg-background pb-12 font-sans text-foreground">
-      {/* 顶部发光标题区域 */}
-      <View className="relative overflow-hidden px-6 pt-12 pb-10">
-        <View className="absolute top-[-30px] right-[-30px] h-52 w-52 rounded-full bg-primary/10 blur-3xl" />
-        <View className="absolute bottom-[-50px] left-[-30px] h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+    <DemoPage>
+      <Cell
+        title="Zustand 状态管理"
+        description="轻量、极速性能的多端局部与全局状态流转方案"
+        extra={
+          <Space>
+            <Tag type="primary" className="rounded-full px-2 py-0.5 text-[9px]">
+              Store
+            </Tag>
+            <Button
+              shape="round"
+              size="small"
+              type="default"
+              className="h-10 w-10 border border-input bg-secondary font-bold text-xs shadow-ring"
+              onClick={handleGoBack}
+            >
+              ←
+            </Button>
+          </Space>
+        }
+        className="demo-hero rounded-3xl border border-border bg-card shadow-whisper"
+      />
 
-        <View className="relative z-10 flex items-center justify-between">
-          <View>
-            <View className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-semibold text-[10px] text-primary uppercase tracking-widest">
-              🐻 State Manager
-            </View>
-            <Text className="block font-medium font-serif text-3xl tracking-tight">
-              Zustand 状态管理
-            </Text>
-            <Text className="mt-1 block font-sans text-muted-foreground text-xs">
-              轻量、极速性能的多端状态流转方案
-            </Text>
-          </View>
-          <View
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-input bg-secondary text-secondary-foreground shadow-ring transition-all active:scale-95"
-            onClick={handleGoBack}
+      <DemoSection
+        title="⏱️ 计数状态 (内存存储)"
+        description="当页面完全关闭/小程序冷启动后会被重置"
+      >
+        <View className="flex items-center justify-between">
+          <View />
+          <Button
+            size="small"
+            type="default"
+            className="rounded-lg border border-input bg-secondary text-xs shadow-ring"
+            onClick={handleResetCounter}
           >
-            ←
-          </View>
+            重置
+          </Button>
         </View>
-      </View>
-
-      <View className="space-y-6 px-6">
-        {/* 模块 1: Counter (非持久化内存存储) */}
-        <View className="premium-card p-6">
-          <View className="flex items-center justify-between border-border border-b pb-4">
-            <View>
-              <Text className="block font-medium font-serif text-base text-foreground">
-                ⏱️ 计数状态 (内存存储)
-              </Text>
-              <Text className="mt-0.5 block font-sans text-[10px] text-muted-foreground">
-                当页面完全关闭/小程序冷启动后会被重置
-              </Text>
+        <View className="flex items-center justify-center gap-10 py-2">
+          <Button
+            shape="round"
+            type="default"
+            className="flex h-12 w-12 items-center justify-center border border-input bg-secondary text-lg shadow-ring"
+            onClick={handleDecrement}
+          >
+            -
+          </Button>
+          <View className="flex min-w-[80px] flex-col gap-1 text-center">
+            <View className="font-medium font-serif text-4xl text-foreground tracking-tight">
+              {count}
             </View>
-            <View
-              className="cursor-pointer rounded-lg border border-input bg-secondary px-2.5 py-1 font-sans text-secondary-foreground text-xs shadow-ring active:scale-95"
-              onClick={handleResetCounter}
-            >
-              重置
+            <View className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
+              Count Value
             </View>
           </View>
+          <Button
+            shape="round"
+            type="primary"
+            className="flex h-12 w-12 items-center justify-center text-lg shadow-ring"
+            onClick={handleIncrement}
+          >
+            +
+          </Button>
+        </View>
+      </DemoSection>
 
-          <View className="my-6 flex items-center justify-center gap-10">
-            <Button
-              shape="round"
-              className="flex h-12 w-12 items-center justify-center border-input bg-secondary font-semibold text-lg text-secondary-foreground shadow-ring transition-all active:scale-90"
-              onClick={handleDecrement}
-            >
-              -
-            </Button>
-            <View className="min-w-[80px] text-center">
-              <Text className="block font-medium font-serif text-4xl text-foreground tracking-tight transition-all duration-350">
-                {count}
-              </Text>
-              <Text className="mt-1 block font-mono text-[10px] text-muted-foreground tracking-widest">
-                COUNT VALUE
-              </Text>
-            </View>
-            <Button
-              shape="round"
-              type="primary"
-              className="flex h-12 w-12 items-center justify-center font-semibold text-lg shadow-ring transition-all active:scale-90"
-              onClick={handleIncrement}
-            >
-              +
-            </Button>
-          </View>
+      <DemoSection
+        title="👤 个人设置 (持久化存储)"
+        description="💾 自动映射至 Taro Storage (刷新不丢失)"
+      >
+        <View className="flex items-center justify-end">
+          <Button
+            size="small"
+            type="danger"
+            className="rounded-lg text-xs"
+            onClick={handleResetProfile}
+          >
+            恢复默认
+          </Button>
         </View>
 
-        {/* 模块 2: User Settings (多端持久化存储) */}
-        <View className="premium-card p-6">
-          {/* 头部信息 */}
-          <View className="mb-5 flex items-center justify-between border-border border-b pb-4">
-            <View>
-              <Text className="block font-medium font-serif text-base text-foreground">
-                👤 个人设置 (持久化存储)
-              </Text>
-              <Text className="mt-0.5 block font-sans font-semibold text-[10px] text-success">
-                💾 自动映射至 Taro Storage (刷新不丢失)
-              </Text>
-            </View>
-            <View
-              className="cursor-pointer rounded-lg border border-destructive/20 bg-destructive/10 px-2.5 py-1 font-sans text-destructive text-xs active:scale-95"
-              onClick={handleResetProfile}
+        <View className="rounded-xl border border-border bg-secondary/35 p-5 shadow-ring">
+          <View className="flex items-start gap-4">
+            <Avatar
+              size="large"
+              background={profile.themeColor}
+              color="var(--primary-foreground)"
             >
-              恢复默认
+              {profile.nickname
+                ? profile.nickname.charAt(0).toUpperCase()
+                : 'U'}
+            </Avatar>
+            <View className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <View className="truncate font-medium font-serif text-base text-foreground">
+                {profile.nickname || '未设定昵称'}
+              </View>
+              <View className="truncate font-sans text-muted-foreground text-xs">
+                色彩标识：{profile.themeColor}
+              </View>
             </View>
           </View>
 
-          {/* 实时预览卡片 */}
-          <View className="mb-6 rounded-xl border border-border bg-secondary/40 p-4 transition-all duration-300">
-            <View className="flex items-start gap-4">
-              <View
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-medium font-serif text-lg text-white shadow-whisper transition-all duration-500"
-                style={{ backgroundColor: profile.themeColor }}
-              >
-                {profile.nickname
-                  ? profile.nickname.charAt(0).toUpperCase()
-                  : 'U'}
+          <Space wrap className="mt-4">
+            {profile.tags.length === 0 ? (
+              <View className="text-muted-foreground text-xs">
+                暂无个性化标签
               </View>
-              <View className="min-w-0 flex-1">
-                <Text className="block truncate font-medium font-serif text-base text-foreground">
-                  {profile.nickname || '未设定昵称'}
-                </Text>
-                <Text className="mt-0.5 block truncate font-sans text-muted-foreground text-xs">
-                  色彩标识：
-                  <Text
-                    className="font-mono font-semibold text-xs"
-                    style={{ color: profile.themeColor }}
-                  >
-                    {profile.themeColor}
-                  </Text>
-                </Text>
-              </View>
-            </View>
-
-            {/* 标签预览与移除交互 */}
-            <View className="mt-4 flex flex-wrap gap-2">
-              {profile.tags.length === 0 ? (
-                <Text className="font-sans text-muted-foreground text-xs">
-                  暂无个性化标签
-                </Text>
-              ) : (
-                profile.tags.map((tag) => (
-                  <Tag
-                    key={tag}
-                    className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-border bg-card px-2.5 py-0.5 font-sans text-[10px] text-foreground transition-all hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
-                    onClick={() => handleRemoveTag(tag)}
-                  >
-                    <Text>{tag}</Text>
-                    <Text className="ml-0.5 font-bold text-muted-foreground hover:text-destructive">
-                      ×
-                    </Text>
-                  </Tag>
-                ))
-              )}
-            </View>
-          </View>
-
-          {/* 表单控件区 */}
-          <View className="space-y-4">
-            {/* 修改昵称 */}
-            <View>
-              <Text className="mb-1.5 block font-sans font-semibold text-muted-foreground text-xs">
-                修改昵称
-              </Text>
-              <Input
-                className="w-full rounded-lg border border-input bg-card text-foreground text-sm"
-                value={profile.nickname}
-                onChange={handleNicknameChange}
-                placeholder="请输入您的昵称"
-              />
-            </View>
-
-            {/* 选择主题色 */}
-            <View>
-              <Text className="mb-2 block font-sans font-semibold text-muted-foreground text-xs">
-                个性主题配色
-              </Text>
-              <View className="flex items-center gap-3.5">
-                {colorPresets.map((preset) => (
-                  <View
-                    key={preset.value}
-                    className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition-all duration-300 ${
-                      profile.themeColor === preset.value
-                        ? 'scale-110 ring-2 ring-primary ring-offset-2 ring-offset-background'
-                        : 'opacity-80 hover:scale-105 hover:opacity-100'
-                    }`}
-                    style={{ backgroundColor: preset.value }}
-                    onClick={() =>
-                      handleColorChange(preset.value, preset.label)
-                    }
-                  >
-                    {profile.themeColor === preset.value && (
-                      <Text className="font-bold text-[10px] text-white">
-                        ✓
-                      </Text>
-                    )}
-                  </View>
-                ))}
-              </View>
-            </View>
-
-            {/* 添加偏好标签 */}
-            <View>
-              <Text className="mb-1.5 block font-sans font-semibold text-muted-foreground text-xs">
-                标签偏好管理
-              </Text>
-              <View className="flex items-center gap-2">
-                <Input
-                  className="flex-1 rounded-lg border border-input bg-card text-foreground text-sm"
-                  value={newTag}
-                  onChange={(val) => setNewTag(val)}
-                  placeholder="输入新标签，回车或点击添加..."
-                  onConfirm={handleAddTag}
-                />
-                <View
-                  className="flex h-[42px] cursor-pointer items-center justify-center rounded-lg border border-input bg-secondary px-4 font-semibold text-secondary-foreground text-sm shadow-ring transition-all active:scale-95"
-                  onClick={handleAddTag}
+            ) : (
+              profile.tags.map((tag) => (
+                <Tag
+                  key={tag}
+                  className="cursor-pointer rounded-full border border-border bg-card px-3 py-1 text-[10px] shadow-ring"
+                  onClick={() => handleRemoveTag(tag)}
                 >
-                  添加
-                </View>
-              </View>
-              <Text className="mt-1.5 block font-sans text-[10px] text-muted-foreground leading-relaxed">
-                💡 贴心提示：您可以直接点击上方卡片中的标签将其移除。
-              </Text>
-            </View>
-          </View>
+                  {tag} ×
+                </Tag>
+              ))
+            )}
+          </Space>
         </View>
 
-        {/* 模块 3: 日志流水终端 */}
-        <View className="dark rounded-xl border border-border bg-background p-5 font-mono shadow-whisper">
-          <Text className="mb-3 block font-bold font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-            📠 Real-time Action Logger
-          </Text>
-          <View className="max-h-[200px] min-h-[140px] space-y-1.5 overflow-y-auto rounded-lg border border-border bg-card p-4 text-[11px] leading-relaxed">
-            {logs.map((log) => (
-              <View key={log.id} className="flex items-start gap-2">
-                <Text className="shrink-0 font-semibold text-primary/90">
-                  [{log.time}]
-                </Text>
-                <Text className="flex-1 break-all text-foreground">
-                  {log.action}
-                </Text>
-              </View>
+        <Divider />
+
+        <View className="flex flex-col gap-2">
+          <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+            修改昵称
+          </View>
+          <Input
+            className="w-full rounded-xl border border-input bg-card px-4 py-2.5 text-sm"
+            value={profile.nickname}
+            onChange={handleNicknameChange}
+            placeholder="请输入您的昵称"
+          />
+        </View>
+
+        <Divider />
+
+        <View className="flex flex-col gap-2">
+          <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+            个性主题配色
+          </View>
+          <Space wrap className="pt-1">
+            {COLOR_PRESETS.map((preset) => (
+              <Button
+                key={preset.value}
+                shape="round"
+                type="default"
+                className={`h-8 w-8 min-w-8 border-2 p-0 ${
+                  profile.themeColor === preset.value
+                    ? 'scale-110 border-primary'
+                    : 'border-transparent opacity-80'
+                }`}
+                style={{ backgroundColor: preset.value }}
+                onClick={() => handleColorChange(preset.value, preset.label)}
+              >
+                {profile.themeColor === preset.value ? '✓' : ''}
+              </Button>
             ))}
-          </View>
+          </Space>
         </View>
 
-        {/* 持久化验证与导航说明 */}
-        <View className="rounded-xl border border-border bg-secondary/30 p-4 text-center">
-          <Text className="block font-sans text-muted-foreground text-xs leading-relaxed">
-            想测试多端持久化？您可以点击下方返回首页，刷新页面，再次进入本页，个人设置（昵称、色彩、标签）仍将完好如初！
-          </Text>
-          <View
-            className="mt-3.5 inline-flex cursor-pointer items-center gap-1 rounded-lg border border-primary/20 bg-primary/10 px-4 py-2 font-sans font-semibold text-primary text-xs shadow-ring active:scale-95"
+        <Divider />
+
+        <View className="flex flex-col gap-2">
+          <View className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+            标签偏好管理
+          </View>
+          <Space className="w-full">
+            <Input
+              className="flex-1 rounded-xl border border-input bg-card px-4 py-2.5 text-sm"
+              value={newTag}
+              onChange={(val) => setNewTag(val)}
+              placeholder="输入新标签..."
+              onConfirm={handleAddTag}
+            />
+            <Button
+              type="default"
+              className="rounded-xl border border-input bg-secondary px-5 shadow-ring"
+              onClick={handleAddTag}
+            >
+              添加
+            </Button>
+          </Space>
+          <View className="text-[10px] text-muted-foreground leading-relaxed">
+            💡 点击上方预览区中的标签可便捷移除。
+          </View>
+        </View>
+      </DemoSection>
+
+      <DemoSection title="📠 Real-time Action Logger">
+        <View className="dark flex max-h-[160px] min-h-[120px] flex-col gap-2 overflow-y-auto rounded-lg border border-border bg-background p-4 font-mono text-[10px] leading-relaxed">
+          {logs.map((log) => (
+            <View key={log.id} className="flex items-start gap-2">
+              <View className="shrink-0 font-semibold text-primary">
+                [{log.time}]
+              </View>
+              <View className="flex-1 break-all text-foreground">
+                {log.action}
+              </View>
+            </View>
+          ))}
+        </View>
+      </DemoSection>
+
+      <DemoSection title="持久化验证">
+        <View className="flex flex-col items-center gap-4 text-center">
+          <View className="max-w-sm text-muted-foreground text-xs leading-relaxed">
+            返回首页后再次进入，个人设置（昵称、主题色、标签）仍将保留。
+          </View>
+          <Button
+            type="primary"
+            className="rounded-lg px-6 py-2.5 font-semibold text-xs shadow-ring"
             onClick={handleGoBack}
           >
             返回 Showcase 首页
-          </View>
+          </Button>
         </View>
-      </View>
-    </View>
+      </DemoSection>
+    </DemoPage>
   );
 }
