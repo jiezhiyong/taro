@@ -3,20 +3,18 @@ import {
   Button,
   Dialog,
   Loading,
+  Lottie,
   Overlay,
   ResultPage,
   Skeleton,
   Space,
   Toast,
 } from '@nutui/nutui-react-taro';
+import lightLoading from '@nutui/nutui-react-taro/dist/es/packages/lottie/animation/light/loading.json';
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
-import {
-  DemoPage,
-  DemoPageHeader,
-  DemoSection,
-} from '@/components/demo-layout';
+import { PageHeader, PageWrapper, SectionCard } from '@/components/PageWrapper';
 
 export default function Feedback() {
   const [toastVisible, setToastVisible] = useState(false);
@@ -48,77 +46,63 @@ export default function Feedback() {
   };
 
   return (
-    <DemoPage>
-      <DemoPageHeader
-        title="🔔 反馈与状态"
+    <PageWrapper>
+      <PageHeader
+        title="反馈与状态"
         description="高交互性的模态提示、遮罩面板、智能骨架屏及多端统一的全局状态反馈"
       />
 
-      <DemoSection title="轻提示 Toast">
-        <View className="grid grid-cols-2 gap-3">
+      <SectionCard title="轻提示 Toast & 弹窗">
+        <Space className="w-full">
           <Button
             type="info"
-            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
-            onClick={() => showToast('info', 'ℹ️ 正在拉取云端数据...')}
+            onClick={() => showToast('info', '正在拉取云端数据...')}
           >
-            普通提示
+            普通
           </Button>
           <Button
             type="success"
-            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
-            onClick={() => showToast('success', '✅ 微信授权登录成功')}
+            onClick={() => showToast('success', '微信授权登录成功')}
           >
-            成功提示
+            成功
           </Button>
           <Button
             type="danger"
-            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
-            onClick={() => showToast('error', '❌ 上传网络超时，请重试')}
+            onClick={() => showToast('error', '上传网络超时，请重试')}
           >
-            失败提示
+            失败
           </Button>
-          <Button
-            type="primary"
-            className="rounded-lg py-3 font-semibold text-xs shadow-ring"
-            onClick={() => setDialogVisible(true)}
-          >
-            模块弹窗
+          <Button type="primary" onClick={() => setDialogVisible(true)}>
+            弹窗
           </Button>
-        </View>
-      </DemoSection>
+        </Space>
+      </SectionCard>
 
-      <DemoSection title="加载 Loading & 遮罩">
+      <SectionCard title="加载 Loading & 遮罩">
         <Space className="w-full">
-          <Button
-            type="primary"
-            className="flex-1 rounded-lg py-3 font-semibold text-xs shadow-ring"
-            onClick={showLoading}
-          >
+          <Button type="primary" onClick={showLoading}>
             全屏加载
           </Button>
           <Button
-            type="default"
-            className="flex-1 rounded-lg border border-input bg-secondary py-3 font-semibold text-secondary-foreground text-xs shadow-ring"
+            type="info"
             onClick={() => setSkeletonLoading(!skeletonLoading)}
           >
             骨架屏切换
           </Button>
         </Space>
-      </DemoSection>
+      </SectionCard>
 
-      <DemoSection title="智能骨架屏 Skeleton">
-        <Skeleton rows={3} animated visible={!skeletonLoading}>
-          <View className="flex items-center gap-4 rounded-lg bg-secondary/10 p-2">
+      <SectionCard title="骨架屏 Skeleton">
+        <Skeleton rows={3} animated visible={!skeletonLoading} size="small">
+          <View className="flex items-center gap-2 py-3">
             <Avatar
-              size="large"
               background="var(--primary)"
               color="var(--primary-foreground)"
-            >
-              JD
-            </Avatar>
+              src="https://img.yzcdn.cn/vant/cat.jpeg"
+            />
             <View className="flex min-w-0 flex-1 flex-col gap-1">
               <View className="font-semibold text-foreground text-sm">
-                云端用户: DeepMind-AI
+                DeepMind-AI
               </View>
               <View className="text-muted-foreground text-xs">
                 由 Taro-best-practices 编译渲染完成
@@ -126,16 +110,16 @@ export default function Feedback() {
             </View>
           </View>
         </Skeleton>
-      </DemoSection>
+      </SectionCard>
 
-      <DemoSection title="多态结果页 ResultPage">
+      <SectionCard title="多态结果页 ResultPage">
         <ResultPage
           status="success"
           title="操作执行完毕"
-          description="数据记录已经过序列化转换并推送到后台服务器。"
-          className="rounded-xl border border-border bg-secondary/35 py-4 shadow-ring"
+          description="数据记录已经过序列化转换并推送到服务器"
+          className="text-center"
         />
-      </DemoSection>
+      </SectionCard>
 
       <Toast
         visible={toastVisible}
@@ -148,22 +132,29 @@ export default function Feedback() {
         visible={dialogVisible}
         title="最佳实践确认"
         content="这是一个 NutUI 弹窗（Dialog）最佳实践展示，能自动适配不同终端样式。"
+        onCancel={() => setDialogVisible(false)}
         onConfirm={() => {
           setDialogVisible(false);
           Taro.showToast({ title: '已确认', icon: 'success' });
         }}
-        onCancel={() => setDialogVisible(false)}
       />
 
       <Overlay
         visible={loadingVisible}
-        className="flex items-center justify-center bg-foreground/60"
+        className="flex items-center justify-center"
         zIndex={2000}
       >
-        <View className="flex flex-col items-center justify-center rounded-2xl border border-border bg-card p-6 shadow-whisper">
-          <Loading direction="vertical">云端数据载入中...</Loading>
+        <View className="rounded-3xl bg-card px-6 py-4 shadow-whisper">
+          <Loading
+            style={{ flexDirection: 'column' }}
+            icon={
+              <Lottie source={lightLoading} style={{ width: 56, height: 56 }} />
+            }
+          >
+            努力加载中
+          </Loading>
         </View>
       </Overlay>
-    </DemoPage>
+    </PageWrapper>
   );
 }

@@ -17,6 +17,7 @@ const nutuiTheme = {
   nutuiTitleColor: 'var(--foreground)',
   nutuiBorderColor: 'var(--border)',
   nutuiGrayBg: 'var(--secondary)',
+  nutuiLoadingIconSize: '20px',
 };
 
 function App({ children }: PropsWithChildren) {

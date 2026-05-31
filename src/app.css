@@ -1,113 +1,78 @@
-@import "tailwindcss";
-@import "./styles/page.sass";
+/* Tailwind CSS */
+@layer theme, base, components;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
 
-/* ==========================================
-   Design System Inspired by Claude (Anthropic)
-   ========================================== */
+/* Base CSS */
+@import "./styles/common.css";
+
+/* NutUI CSS */
+@import "./styles/nutui.css";
 
 :root {
-  /* Typography fallback stack */
-  --font-sans:
-    "Anthropic Sans", "Outfit", "Inter", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, sans-serif;
-  --font-serif: "Anthropic Serif", "Georgia", serif;
-  --font-mono:
-    "Anthropic Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
-    Courier, monospace;
+  --background: #f5f4ed;
+  --foreground: #141413;
 
-  /* Exclusive Warm Neutral Palette (Light Mode - Parchment & Ivory) */
-  --background: #f5f4ed; /* Parchment canvas */
-  --foreground: #141413; /* Anthropic Near Black */
-
-  --card: #faf9f5; /* Ivory card surface */
+  --card: #faf9f5;
   --card-foreground: #141413;
 
-  --primary: #c96442; /* Terracotta Brand Accent */
+  --primary: #c96442;
   --primary-foreground: #faf9f5;
 
-  --secondary: #e8e6dc; /* Warm Sand */
-  --secondary-foreground: #4d4c48; /* Charcoal Warm */
+  --secondary: #e8e6dc;
+  --secondary-foreground: #4d4c48;
 
   --accent: #e8e6dc;
   --accent-foreground: #4d4c48;
 
-  --muted-foreground: #5e5d59; /* Olive Gray */
+  --muted-foreground: #5e5d59;
 
-  --border: #f0eee6; /* Border Cream (barely visible) */
-  --input: #e8e6dc; /* Border Warm */
+  --border: #f0eee6;
+  --input: #e8e6dc;
 
-  --ring: #3898ec; /* Focus Blue (purely for accessibility) */
-  --destructive: #b53333; /* Error Crimson */
+  --ring: #3898ec;
+  --destructive: #b53333;
 
-  /* Semantic Highlights (Warm-Toned) */
-  --success: #387a5f; /* Warm Muted Green */
-  --warning: #b87a3b; /* Warm Terracotta Yellow */
+  --success: #387a5f;
+  --warning: #b87a3b;
 
-  /* Ring & Soft Depth Elevation */
-  --shadow-ring: 0px 0px 0px 1px #d1cfc5; /* Ring Warm shadow-ring */
+  --shadow-ring: 0px 0px 0px 1px #d1cfc5;
   --shadow-whisper:
     0px 10px 25px -5px rgba(20, 20, 19, 0.05),
     0px 8px 10px -6px rgba(20, 20, 19, 0.05);
-
-  /* NutUI v3 CSS Variables Mapping (Light Mode) */
-  --nutui-brand-color: var(--primary);
-  --nutui-brand-color-start: var(--primary);
-  --nutui-brand-color-end: var(--primary);
-  --nutui-link-color: var(--primary);
-  --nutui-text-color: var(--foreground);
-  --nutui-title-color: var(--foreground);
-  --nutui-border-color: var(--border);
-  --nutui-gray-background: var(--secondary);
 }
 
 .dark {
-  /* Exclusive Warm Neutral Palette (Dark Mode - Deep Dark & Charcoal) */
-  --background: #141413; /* Deep Dark */
-  --foreground: #faf9f5; /* Ivory */
+  --background: #141413;
+  --foreground: #faf9f5;
 
-  --card: #30302e; /* Dark Surface */
+  --card: #30302e;
   --card-foreground: #faf9f5;
 
-  --primary: #c96442; /* Terracotta Brand Accent */
+  --primary: #c96442;
   --primary-foreground: #141413;
 
-  --secondary: #30302e; /* Dark Surface */
-  --secondary-foreground: #b0aea5; /* Warm Silver */
+  --secondary: #30302e;
+  --secondary-foreground: #b0aea5;
 
   --accent: #30302e;
   --accent-foreground: #b0aea5;
 
-  --muted-foreground: #b0aea5; /* Warm Silver */
+  --muted-foreground: #b0aea5;
 
-  --border: #30302e; /* Border Dark */
+  --border: #30302e;
   --input: #30302e;
 
-  --ring: #3898ec; /* Focus Blue */
-  --destructive: #b53333; /* Error Crimson */
-
-  /* Semantic Highlights (Warm-Toned Dark Mode) */
+  --ring: #3898ec;
+  --destructive: #b53333;
   --success: #6ba88f;
   --warning: #d49c63;
 
-  /* Ring & Soft Depth Elevation (Dark Mode) */
   --shadow-ring: 0px 0px 0px 1px #30302e;
   --shadow-whisper:
     0px 10px 25px -5px rgba(0, 0, 0, 0.3), 0px 8px 10px -6px rgba(0, 0, 0, 0.3);
-
-  /* NutUI v3 CSS Variables Mapping (Dark Mode) */
-  --nutui-brand-color: var(--primary);
-  --nutui-brand-color-start: var(--primary);
-  --nutui-brand-color-end: var(--primary);
-  --nutui-link-color: var(--primary);
-  --nutui-text-color: var(--foreground);
-  --nutui-title-color: var(--foreground);
-  --nutui-border-color: var(--border);
-  --nutui-gray-background: var(--secondary);
 }
 
-/* ==========================================
-   Tailwind CSS v4 Theme Token Configurations
-   ========================================== */
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -130,91 +95,11 @@
   --shadow-ring: var(--shadow-ring);
   --shadow-whisper: var(--shadow-whisper);
 
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
-  --font-mono: var(--font-mono);
-
-  --radius-xs: 4px; /* Sharp */
-  --radius-sm: 6px; /* Subtly rounded */
-  --radius-md: 8px; /* Comfortably rounded */
-  --radius-lg: 12px; /* Generously rounded */
-  --radius-xl: 16px; /* Very rounded */
-  --radius-2xl: 24px; /* Highly rounded */
-  --radius-3xl: 32px; /* Maximum rounded */
-}
-
-/* ==========================================
-   Base Elements & Global Compatible Box Model
-   ========================================== */
-view,
-text,
-button,
-scroll-view,
-swiper,
-image {
-  box-sizing: border-box;
-}
-
-/*
-   Fix Tailwind CSS v4 Native Cascade Layer conflict with Taro H5 Components:
-   Since the taro-view-core default `display: block` style is injected dynamically as an UNLAYERED style,
-   it overrides Tailwind's LAYERED utility classes (.grid, .flex, etc.) regardless of specificity.
-   We declare these unlayered overrides to restore proper layout behaviors on H5 custom tags.
-*/
-taro-view-core.grid {
-  display: grid;
-}
-taro-view-core.flex {
-  display: flex;
-}
-taro-view-core.inline-grid {
-  display: inline-grid;
-}
-taro-view-core.inline-flex {
-  display: inline-flex;
-}
-taro-view-core.inline-block {
-  display: inline-block;
-}
-taro-view-core.block {
-  display: block;
-}
-taro-view-core.hidden {
-  display: none;
-}
-taro-text-core.block {
-  display: block;
-}
-taro-text-core.inline-block {
-  display: inline-block;
-}
-taro-text-core.hidden {
-  display: none;
-}
-
-/* Page canvas background & typography defaults */
-page {
-  background-color: var(--background);
-  font-family: var(--font-sans);
-  color: var(--foreground);
-  line-height: 1.6; /* Relaxed body line-height */
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Clear standard button default pseudo-borders in WeChat Mini Program */
-button::after {
-  display: none;
-}
-
-/* ==========================================
-   Global Layout & Component Styling Utilities
-   ========================================== */
-
-/* Enforces uniform side padding (24px), top padding (24px), and bottom clearance (128px) to clear the TabBar */
-.page-wrapper {
-  min-height: 100vh;
-  background-color: var(--background);
-  padding: 24px;
-  padding-bottom: 128px;
-  box-sizing: border-box;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
 }

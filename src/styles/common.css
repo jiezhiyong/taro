@@ -1,0 +1,68 @@
+/* Base Elements & Global Compatible Box Model */
+view,
+text,
+button,
+scroll-view,
+swiper,
+image {
+  box-sizing: border-box;
+}
+
+/* Page canvas background & typography defaults */
+page {
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Clear standard button default pseudo-borders in WeChat Mini Program */
+button::after {
+  display: none;
+}
+
+/*
+  Fix Tailwind CSS v4 Native Cascade Layer conflict with Taro H5 Components:
+  Since the taro-view-core default `display: block` style is injected dynamically as an UNLAYERED style,
+  it overrides Tailwind's LAYERED utility classes (.grid, .flex, etc.) regardless of specificity.
+  We declare these unlayered overrides to restore proper layout behaviors on H5 custom tags.
+*/
+taro-view-core.grid {
+  display: grid;
+}
+
+taro-view-core.flex {
+  display: flex;
+}
+
+taro-view-core.inline-grid {
+  display: inline-grid;
+}
+
+taro-view-core.inline-flex {
+  display: inline-flex;
+}
+
+taro-view-core.inline-block {
+  display: inline-block;
+}
+
+taro-view-core.block {
+  display: block;
+}
+
+taro-view-core.hidden {
+  display: none;
+}
+
+taro-text-core.block {
+  display: block;
+}
+
+taro-text-core.inline-block {
+  display: inline-block;
+}
+
+taro-text-core.hidden {
+  display: none;
+}

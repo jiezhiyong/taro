@@ -17,6 +17,7 @@
     "paths": { "@/*": ["./src/*"] },
     "baseUrl": ".",
     "allowJs": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true
   },
   "include": ["./src", "./types", "./config"],

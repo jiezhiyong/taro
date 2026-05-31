@@ -18,9 +18,9 @@ interface UserState {
 }
 
 const initialProfile: UserProfile = {
-  nickname: 'Taro 开发者',
-  themeColor: '#4f46e5', // Indigo-600
-  tags: ['Taro', 'React', 'Zustand'],
+  nickname: 'Taro Showcase',
+  themeColor: 'var(--primary)',
+  tags: ['Taro', 'React', 'Zustand', 'mini-program'],
 };
 
 export const useUserStore = create<UserState>()(
