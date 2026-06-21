@@ -3,6 +3,7 @@ import { defineConfig } from '@tarojs/cli';
 import type { CIOptions } from '@tarojs/plugin-mini-ci';
 import { UnifiedWebpackPluginV5 } from 'weapp-tailwindcss/webpack';
 
+const isDev = process.env.NODE_ENV === 'development';
 const isMiniCiCommand = ['open', 'preview', 'upload'].includes(
   process.argv[2] ?? '',
 );
@@ -65,10 +66,7 @@ export default defineConfig({
     '@': path.resolve(__dirname, '..', 'src'),
   },
   defineConstants: {
-    API_HOST:
-      process.env.NODE_ENV === 'development'
-        ? '"/api"'
-        : '"https://api.example.com"',
+    API_HOST: isDev ? '"/api"' : '"https://api.example.com"',
     YOUSHU_TOKEN: stringifyEnv('YOUSHU_TOKEN'),
     YOUSHU_APPID: stringifyEnv('YOUSHU_APPID'),
     YOUSHU_DEBUG: JSON.stringify(process.env.YOUSHU_DEBUG === '1'),
