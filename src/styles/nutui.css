@@ -1,0 +1,26 @@
+:root {
+  --nutui-brand-color: var(--primary);
+  --nutui-brand-color-start: var(--primary);
+  --nutui-brand-color-end: var(--primary);
+  --nutui-link-color: var(--primary);
+  --nutui-text-color: var(--foreground);
+  --nutui-title-color: var(--foreground);
+  --nutui-border-color: var(--border);
+  --nutui-gray-background: var(--secondary);
+  --nutui-skeleton-background: var(--background);
+
+  --nutui-tag-height: "auto";
+  --nutui-tag-border-radius: 8px;
+  --nutui-resultpage-width: 100%;
+}
+
+.dark {
+  --nutui-brand-color: var(--primary-foreground);
+  --nutui-brand-color-start: var(--primary-foreground);
+  --nutui-brand-color-end: var(--primary-foreground);
+  --nutui-link-color: var(--primary-foreground);
+  --nutui-text-color: var(--primary-foreground);
+  --nutui-title-color: var(--primary-foreground);
+  --nutui-border-color: var(--border);
+  --nutui-gray-background: var(--secondary-foreground);
+}
