@@ -1,3 +1,7 @@
+/**
+ * 全局配置
+ * https://docs.taro.zone/docs/app-config
+ */
 export default {
   pages: [
     'pages/index/index',

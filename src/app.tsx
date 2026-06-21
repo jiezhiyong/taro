@@ -5,6 +5,7 @@ import { useLaunch } from '@tarojs/taro';
 import type { PropsWithChildren } from 'react';
 import { useLocaleStore } from '@/store/localeStore';
 import './polyfills.js';
+import './utils/youshu';
 import './app.css';
 
 // CSS variables-backed theme mapping

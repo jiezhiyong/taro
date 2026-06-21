@@ -11,3 +11,4 @@ coverage/
 .output/
 .env.local
 .swc/
+config/ci/
