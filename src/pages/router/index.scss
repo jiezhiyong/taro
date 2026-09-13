@@ -1,1 +1,20 @@
-/* 路由能力页面样式 */
+.router-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.router-action-button .nut-button-wrap,
+.router-action-button .nut-button-children {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.router-action-button .nut-icon,
+.router-action-button svg {
+  display: block;
+  flex: 0 0 auto;
+}

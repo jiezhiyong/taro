@@ -5,10 +5,11 @@ import {
   Refresh,
   Share,
 } from '@nutui/icons-react-taro';
-import { Button, Space, Tag } from '@nutui/nutui-react-taro';
+import { Button, Space } from '@nutui/nutui-react-taro';
 import { Text, View } from '@tarojs/components';
 import Taro, { useRouter } from '@tarojs/taro';
 import { PageHeader, PageWrapper, SectionCard } from '@/components/PageWrapper';
+import './index.scss';
 
 const ROUTER_PAGE = '/pages/router/index';
 
@@ -87,8 +88,7 @@ export default function RouterShowcase() {
         description="由 useRouter(true) 动态读取"
       >
         <View className="rounded-2xl border border-border bg-background p-4">
-          <View className="text-muted-foreground text-xs">path</View>
-          <View className="mt-1 break-all font-medium text-foreground text-sm">
+          <View className="break-all font-medium text-foreground text-sm">
             {currentPath}
           </View>
         </View>
@@ -100,9 +100,9 @@ export default function RouterShowcase() {
               className="flex items-center justify-between rounded-2xl border border-border bg-secondary px-3 py-2"
             >
               <Text className="font-semibold text-xs">{key}</Text>
-              <Tag type={routerParams[key] ? 'primary' : 'default'}>
+              <Text className="text-muted-foreground text-xs">
                 {routerParams[key] || '未传入'}
-              </Tag>
+              </Text>
             </View>
           ))}
         </View>
@@ -120,15 +120,29 @@ export default function RouterShowcase() {
         </View>
 
         <Space direction="vertical">
-          <Button type="primary" block onClick={navigateToDemo}>
+          <Button
+            type="primary"
+            block
+            className="router-action-button"
+            onClick={navigateToDemo}
+          >
             <ArrowRight />
             navigateTo 带参跳转
           </Button>
-          <Button block onClick={redirectToDemo}>
+          <Button
+            block
+            className="router-action-button"
+            onClick={redirectToDemo}
+          >
             <Refresh />
             redirectTo 替换当前页
           </Button>
-          <Button fill="outline" block onClick={navigateBack}>
+          <Button
+            fill="outline"
+            block
+            className="router-action-button"
+            onClick={navigateBack}
+          >
             <ArrowLeft />
             navigateBack 返回上一页
           </Button>
@@ -158,13 +172,19 @@ export default function RouterShowcase() {
           </View>
         </View>
 
-        <Button fill="outline" block onClick={copyUrl}>
+        <Button
+          fill="outline"
+          block
+          className="router-action-button"
+          onClick={copyUrl}
+        >
           <Copy />
           复制示例路由
         </Button>
         <Button
           fill="none"
           block
+          className="router-action-button"
           onClick={() => Taro.switchTab({ url: '/pages/index/index' })}
         >
           <Share />
