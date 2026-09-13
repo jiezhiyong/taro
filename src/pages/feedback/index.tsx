@@ -1,197 +1,160 @@
-import { View, Text, Button } from "@tarojs/components";
-import { useState } from "react";
-import "./index.scss";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  Loading,
+  Lottie,
+  Overlay,
+  ResultPage,
+  Skeleton,
+  Space,
+  Toast,
+} from '@nutui/nutui-react-taro';
+import lightLoading from '@nutui/nutui-react-taro/dist/es/packages/lottie/animation/light/loading.json';
+import { View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import { useState } from 'react';
+import { PageHeader, PageWrapper, SectionCard } from '@/components/PageWrapper';
 
 export default function Feedback() {
   const [toastVisible, setToastVisible] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [toastText, setToastText] = useState('提示信息');
+  const [toastIcon, setToastIcon] = useState<
+    'success' | 'fail' | 'warn' | 'loading' | null
+  >(null);
   const [loadingVisible, setLoadingVisible] = useState(false);
   const [skeletonLoading, setSkeletonLoading] = useState(true);
+  const [dialogVisible, setDialogVisible] = useState(false);
 
-  const showToast = (type: string) => {
+  const showToast = (type: string, text: string) => {
+    let iconName: 'success' | 'fail' | 'warn' | 'loading' | null = null;
+    if (type === 'success') iconName = 'success';
+    else if (type === 'error') iconName = 'fail';
+    else if (type === 'warn') iconName = 'warn';
+    else if (type === 'loading') iconName = 'loading';
+
+    setToastIcon(iconName);
+    setToastText(text);
     setToastVisible(true);
-    setTimeout(() => setToastVisible(false), 2000);
   };
 
   const showLoading = () => {
     setLoadingVisible(true);
     setTimeout(() => {
       setLoadingVisible(false);
-    }, 3000);
+    }, 2500);
   };
 
   return (
-    <View className="min-h-screen bg-gray-50 p-4 pb-20">
-      {/* Toast 轻提示 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">轻提示 Toast</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini" onClick={() => showToast('text')}>文本提示</Button>
-          <Button size="mini" type="primary" onClick={() => showToast('success')}>成功提示</Button>
-          <Button size="mini" type="warn" onClick={() => showToast('fail')}>失败提示</Button>
-          <Button size="mini" onClick={() => showToast('loading')}>加载提示</Button>
-        </View>
+    <PageWrapper>
+      <PageHeader
+        title="反馈与状态"
+        description="高交互性的模态提示、遮罩面板、智能骨架屏及多端统一的全局状态反馈"
+      />
 
-        {/* Toast 效果展示 */}
-        {toastVisible && (
-          <View className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 text-white px-4 py-2 rounded z-50">
-            <Text className="text-white text-center">提示信息</Text>
-          </View>
-        )}
-      </View>
-
-      {/* Dialog 对话框 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">对话框 Dialog</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini">警告对话框</Button>
-          <Button size="mini" type="primary">确认对话框</Button>
-        </View>
-      </View>
-
-      {/* 消息通知 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">消息通知 Notify</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini">基础通知</Button>
-          <Button size="mini" type="primary">成功通知</Button>
-          <Button size="mini" type="warn">警告通知</Button>
-          <Button size="mini">错误通知</Button>
-        </View>
-
-        {/* 通知效果展示 */}
-        <View className="mt-4 space-y-2">
-          <View className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
-            <Text className="text-blue-700 text-sm">基础通知信息</Text>
-          </View>
-          <View className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
-            <Text className="text-green-700 text-sm">成功通知信息</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Loading 加载 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">加载 Loading</Text>
-        <View className="flex gap-2 flex-wrap">
-          <Button size="mini" onClick={showLoading}>显示加载</Button>
-          <Button size="mini" type="primary" onClick={() => setOverlayVisible(true)}>
-            遮罩层
+      <SectionCard title="轻提示 Toast & 弹窗">
+        <Space className="w-full">
+          <Button
+            type="info"
+            onClick={() => showToast('info', '正在拉取云端数据...')}
+          >
+            普通
           </Button>
           <Button
-            size="mini"
-            type="warn"
+            type="success"
+            onClick={() => showToast('success', '微信授权登录成功')}
+          >
+            成功
+          </Button>
+          <Button
+            type="danger"
+            onClick={() => showToast('error', '上传网络超时，请重试')}
+          >
+            失败
+          </Button>
+          <Button type="primary" onClick={() => setDialogVisible(true)}>
+            弹窗
+          </Button>
+        </Space>
+      </SectionCard>
+
+      <SectionCard title="加载 Loading & 遮罩">
+        <Space className="w-full">
+          <Button type="primary" onClick={showLoading}>
+            全屏加载
+          </Button>
+          <Button
+            type="info"
             onClick={() => setSkeletonLoading(!skeletonLoading)}
           >
-            {skeletonLoading ? '隐藏' : '显示'}骨架屏
+            骨架屏切换
           </Button>
-        </View>
+        </Space>
+      </SectionCard>
 
-        {/* Loading 效果展示 */}
-        {loadingVisible && (
-          <View className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <View className="bg-white p-6 rounded-lg flex items-center">
-              <View className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mr-3"></View>
-              <Text>加载中...</Text>
+      <SectionCard title="骨架屏 Skeleton">
+        <Skeleton rows={3} animated visible={!skeletonLoading} size="small">
+          <View className="flex items-center gap-2 py-3">
+            <Avatar
+              background="var(--primary)"
+              color="var(--primary-foreground)"
+              src="https://img.yzcdn.cn/vant/cat.jpeg"
+            />
+            <View className="flex min-w-0 flex-1 flex-col gap-1">
+              <View className="font-semibold text-foreground text-sm">
+                DeepMind-AI
+              </View>
+              <View className="text-muted-foreground text-xs">
+                由 Taro-best-practices 编译渲染完成
+              </View>
             </View>
           </View>
-        )}
+        </Skeleton>
+      </SectionCard>
 
-        {/* 遮罩层效果 */}
-        {overlayVisible && (
-          <View
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setOverlayVisible(false)}
+      <SectionCard title="多态结果页 ResultPage">
+        <ResultPage
+          status="success"
+          title="操作执行完毕"
+          description="数据记录已经过序列化转换并推送到服务器"
+          className="text-center"
+        />
+      </SectionCard>
+
+      <Toast
+        visible={toastVisible}
+        content={toastText}
+        icon={toastIcon}
+        onClose={() => setToastVisible(false)}
+      />
+
+      <Dialog
+        visible={dialogVisible}
+        title="最佳实践确认"
+        content="这是一个 NutUI 弹窗（Dialog）最佳实践展示，能自动适配不同终端样式。"
+        onCancel={() => setDialogVisible(false)}
+        onConfirm={() => {
+          setDialogVisible(false);
+          Taro.showToast({ title: '已确认', icon: 'success' });
+        }}
+      />
+
+      <Overlay
+        visible={loadingVisible}
+        className="flex items-center justify-center"
+        zIndex={2000}
+      >
+        <View className="rounded-3xl bg-card px-6 py-4 shadow-whisper">
+          <Loading
+            style={{ flexDirection: 'column' }}
+            icon={
+              <Lottie source={lightLoading} style={{ width: 56, height: 56 }} />
+            }
           >
-            <View className="bg-white p-6 rounded-lg">
-              <Text>点击遮罩层关闭</Text>
-            </View>
-          </View>
-        )}
-      </View>
-
-      {/* 骨架屏 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">骨架屏 Skeleton</Text>
-        {skeletonLoading ? (
-          <View className="flex">
-            <View className="w-12 h-12 bg-gray-200 rounded-full mr-3 animate-pulse"></View>
-            <View className="flex-1">
-              <View className="h-4 bg-gray-200 rounded mb-2 animate-pulse"></View>
-              <View className="h-3 bg-gray-200 rounded w-3/4 animate-pulse"></View>
-            </View>
-          </View>
-        ) : (
-          <View className="flex">
-            <View className="w-12 h-12 bg-gray-200 rounded-full mr-3"></View>
-            <View className="flex-1">
-              <Text className="text-lg font-bold">用户名</Text>
-              <Text className="text-gray-600 text-sm">
-                这是用户的个人简介内容，当数据加载完成后会显示真实内容。
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
-
-      {/* Empty 空状态 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">空状态 Empty</Text>
-        <View className="text-center py-8">
-          <Text className="text-6xl mb-4">📭</Text>
-          <Text className="text-gray-500">暂无数据</Text>
+            努力加载中
+          </Loading>
         </View>
-      </View>
-
-      {/* Result 结果页 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">结果页 Result</Text>
-        <View className="space-y-6">
-          <View className="text-center py-4">
-            <Text className="text-4xl mb-2">✅</Text>
-            <Text className="text-lg font-bold mb-2">操作成功</Text>
-            <Text className="text-gray-600 text-sm mb-4">订单已提交成功，我们将尽快为您处理</Text>
-            <View className="flex gap-2 justify-center">
-              <Button size="mini" type="primary">返回首页</Button>
-              <Button size="mini">查看订单</Button>
-            </View>
-          </View>
-
-          <View className="text-center py-4 border-t border-gray-100">
-            <Text className="text-4xl mb-2">❌</Text>
-            <Text className="text-lg font-bold mb-2">操作失败</Text>
-            <Text className="text-gray-600 text-sm mb-4">很抱歉，操作失败，请稍后再试</Text>
-            <Button size="mini" type="primary">重新尝试</Button>
-          </View>
-        </View>
-      </View>
-
-      {/* 反馈状态展示 */}
-      <View className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <Text className="text-lg font-bold mb-4">反馈状态示例</Text>
-        <View className="space-y-0">
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>成功状态</Text>
-            <Text>✅</Text>
-          </View>
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>警告状态</Text>
-            <Text>⚠️</Text>
-          </View>
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>错误状态</Text>
-            <Text>❌</Text>
-          </View>
-          <View className="flex justify-between items-center p-3 border-b border-gray-100">
-            <Text>信息状态</Text>
-            <Text>ℹ️</Text>
-          </View>
-          <View className="flex justify-between items-center p-3">
-            <Text>加载状态</Text>
-            <Text>🔄</Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      </Overlay>
+    </PageWrapper>
   );
 }

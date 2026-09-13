@@ -1,5 +1,7 @@
-import { definePageConfig } from '@tarojs/taro'
-
-export default definePageConfig({
-  navigationBarTitleText: "Taro Showcase"
-});
+/**
+ * 页面配置
+ * https://docs.taro.zone/docs/page-config
+ */
+export default {
+  navigationBarTitleText: 'Taro Showcase',
+};

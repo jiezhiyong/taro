@@ -1,5 +1,3 @@
-import { definePageConfig } from '@tarojs/taro'
-
-export default definePageConfig({
-  navigationBarTitleText: "表单组件"
-});
+export default {
+  navigationBarTitleText: '表单组件',
+};
