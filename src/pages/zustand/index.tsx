@@ -2,7 +2,6 @@ import { Minus, Plus, Refresh } from '@nutui/icons-react-taro';
 import { Avatar, Button, Space, Tag } from '@nutui/nutui-react-taro';
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useState } from 'react';
 import { PageHeader, PageWrapper, SectionCard } from '@/components/PageWrapper';
 import { useCounterStore } from '@/store/counterStore';
 import { useUserStore } from '@/store/userStore';
@@ -22,34 +21,10 @@ export default function ZustandShowcase() {
     decrement,
     reset: resetCounter,
   } = useCounterStore();
-  const {
-    profile,
-    updateNickname,
-    updateThemeColor,
-    addTag,
-    removeTag,
-    resetProfile,
-  } = useUserStore();
-
-  const [newTag, setNewTag] = useState('');
-
-  const handleNicknameChange = (val: string) => {
-    updateNickname(val);
-  };
+  const { profile, updateThemeColor, removeTag, resetProfile } = useUserStore();
 
   const handleColorChange = (color: string) => {
     updateThemeColor(color);
-  };
-
-  const handleAddTag = () => {
-    const trimmed = newTag.trim();
-    if (!trimmed) return;
-    if (profile.tags.includes(trimmed)) {
-      Taro.showToast({ title: '标签已存在', icon: 'none' });
-      return;
-    }
-    addTag(trimmed);
-    setNewTag('');
   };
 
   const handleRemoveTag = (tag: string) => {

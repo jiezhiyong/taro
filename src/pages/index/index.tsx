@@ -23,6 +23,10 @@ const MENU_ITEMS = [
     url: '/pages/navigation/index',
   },
   {
+    title: '路由能力',
+    url: '/pages/router/index',
+  },
+  {
     title: '反馈组件',
     url: '/pages/feedback/index',
   },

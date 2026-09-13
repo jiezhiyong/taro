@@ -1,3 +1,7 @@
+/**
+ * Babel 配置
+ * https://docs.taro.zone/docs/babel-config
+ */
 module.exports = {
   presets: [
     [

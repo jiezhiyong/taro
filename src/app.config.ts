@@ -8,6 +8,7 @@ export default {
     'pages/components/index',
     'pages/form/index',
     'pages/navigation/index',
+    'pages/router/index',
     'pages/feedback/index',
     'pages/zustand/index',
   ],
